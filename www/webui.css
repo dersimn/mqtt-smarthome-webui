@@ -1,0 +1,46 @@
+[class*="col-"] {
+	background-color: rgba(86, 61, 124, .15);
+}
+
+.sh-icon {
+	height: 40px;
+	width: 40px;
+}
+.sh-value {
+	font-size: 100%;
+	margin-right: 1em;
+}
+
+.sh-page {
+	width: 100%;
+	position: fixed;
+}
+
+/* Toggle Checkbox/Button
+   https://gist.github.com/adactio/ade708ef8d45350790e8 */
+.toggle {
+	font-family: sans-serif;
+	background-color: #ccc;
+	display: inline-block;
+	border-radius: 1.2em;
+	padding: 0.2em 2em 0.2em 0.2em;
+}
+.toggle input {
+	display: none;
+}
+.toggle label {
+	position: relative;
+	transition: transform 0.1s;
+	cursor: pointer;
+	background-color: #6c757d; /* Bootstrap4 Color */
+	color: #fff;
+	display: inline-block;
+	padding: 0.25em 1em;
+	border-radius: 1em;
+	margin-bottom: 0; /* Revert behaviour of Reboot.css */
+}
+.toggle input:checked + label {
+	background-color: #693;
+	color: #fff;
+	transform: translateX(1.8em);
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css">
+    <link rel="stylesheet" href="webui.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"></script>
+    <title>mqtt-smarthome</title>
+  </head>
+  <body>
+    <script id="pageTemplate" type="text/template">
+      {{#pages}}
+      <div id="{{pageid}}" class="sh-page">
+        <nav class="navbar navbar-light bg-light">
+          {{^mainpage}}<button class="btn btn-outline-secondary" onClick="window.history.back();">Back</button>{{/mainpage}}
+          <a class="navbar-brand" href="#">
+            {{#pageicon}}<img src="{{pageicon}}" width="30" height="30" class="d-inline-block align-top" alt="">{{/pageicon}}
+            {{title}}
+          </a>
+          {{#mainpage}}
+            <form class="form-inline">
+              <button class="btn btn-sm btn-outline-secondary my-2 my-sm-0" data-mqtt-state>Offline</button>
+            </form>
+          {{/mainpage}}
+        </nav>
+        <div class="list-group list-group-flush">
+          {{#items}}
+            {{^link}}<div class="list-group-item list-group-item-action flex-column align-items-start p-0">{{/link}}
+            {{#link}}<a href="{{link}}" class="list-group-item list-group-item-action flex-column align-items-start p-0">{{/link}}
+              <div class="d-flex">
+                <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
+                <div class="align-self-center p-2 sh-title">{{title}}</div>
+                <div class="align-self-center ml-auto sh-value badge badge-secondary badge-pill">undef.</div>
+              </div>
+            {{^link}}</div>{{/link}}
+            {{#link}}</a>{{/link}}
+          {{/items}}
+        </div>
+      </div>
+      {{/pages}}
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.js"></script>
+    <script src="webui.js"></script>
+  </body>
+</html>

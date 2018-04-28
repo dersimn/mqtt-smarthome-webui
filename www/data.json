@@ -1,0 +1,54 @@
+{
+  "pages": [
+    {
+      "pageid":"mainpage",
+      "mainpage":true,
+      "pageicon":"icon.png",
+      "title":"Smarthome",
+      "items":[
+        {
+          "control":"seperator",
+          "title": "Room 1"
+        },
+        {
+          "control":"text",
+          "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+          "title": "Power consumption",
+          "icon":"http://via.placeholder.com/50x50",
+          "transform": "return Number(value).toFixed(2) + ' W'",
+          "link": "#testpage"
+        },
+        {
+          "control":"seperator",
+          "title":"Room 2"
+        },
+        {
+          "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+          "topic-write": "hs100/set/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+          "control":"switch",
+          "title": "Power state"
+        }
+      ]
+    },
+    {
+      "pageid":"testpage",
+      "title":"Sub-Page",
+      "items":[
+        {
+          "control":"seperator",
+          "title":"Test Room"
+        },
+        {
+          "control":"text",
+          "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+          "title": "Power consumption",
+          "icon":"http://via.placeholder.com/50x50",
+          "transform": "return Number(value).toFixed(2) + ' W'"
+        },
+        {
+          "html": "<div class=\"list-group-item\">Hello World!</div>"
+        }
+      ]
+    }
+  ]
+}
