@@ -2,6 +2,10 @@
 	background-color: rgba(86, 61, 124, .15);
 }
 
+body {
+	background-color: #f8f9fa;
+}
+
 .sh-icon {
 	height: 40px;
 	width: 40px;
@@ -9,6 +13,9 @@
 .sh-value {
 	font-size: 100%;
 	margin-right: 1em;
+}
+.sh-seperator {
+	background-color: #f8f9fa;
 }
 
 .sh-page {

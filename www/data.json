@@ -7,11 +7,11 @@
       "title":"Smarthome",
       "items":[
         {
-          "control":"seperator",
+          "itemSeperator":true,
           "title": "Room 1"
         },
         {
-          "control":"text",
+          "itemText":true,
           "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
           "title": "Power consumption",
           "icon":"http://via.placeholder.com/50x50",
@@ -19,13 +19,13 @@
           "link": "#testpage"
         },
         {
-          "control":"seperator",
+          "itemSeperator":true,
           "title":"Room 2"
         },
         {
           "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
           "topic-write": "hs100/set/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
-          "control":"switch",
+          "itemSwitch":true,
           "title": "Power state"
         }
       ]
@@ -35,11 +35,11 @@
       "title":"Sub-Page",
       "items":[
         {
-          "control":"seperator",
+          "itemSeperator":true,
           "title":"Test Room"
         },
         {
-          "control":"text",
+          "itemText":true,
           "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
           "title": "Power consumption",
           "icon":"http://via.placeholder.com/50x50",

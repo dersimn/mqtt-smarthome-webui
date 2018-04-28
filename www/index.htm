@@ -17,28 +17,35 @@
       {{#pages}}
       <div id="{{pageid}}" class="sh-page">
         <nav class="navbar navbar-light bg-light">
-          {{^mainpage}}<button class="btn btn-outline-secondary" onClick="window.history.back();">Back</button>{{/mainpage}}
+          {{^mainpage}}<button class="btn btn-sm btn-outline-secondary" onClick="window.history.back();">Back</button>{{/mainpage}}
           <a class="navbar-brand" href="#">
             {{#pageicon}}<img src="{{pageicon}}" width="30" height="30" class="d-inline-block align-top" alt="">{{/pageicon}}
             {{title}}
           </a>
           {{#mainpage}}
             <form class="form-inline">
-              <button class="btn btn-sm btn-outline-secondary my-2 my-sm-0" data-mqtt-state>Offline</button>
+              <button class="btn btn-sm btn-outline-secondary" data-mqtt-state>Offline</button>
             </form>
           {{/mainpage}}
         </nav>
         <div class="list-group list-group-flush">
           {{#items}}
-            {{^link}}<div class="list-group-item list-group-item-action flex-column align-items-start p-0">{{/link}}
-            {{#link}}<a href="{{link}}" class="list-group-item list-group-item-action flex-column align-items-start p-0">{{/link}}
-              <div class="d-flex">
-                <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
-                <div class="align-self-center p-2 sh-title">{{title}}</div>
-                <div class="align-self-center ml-auto sh-value badge badge-secondary badge-pill">undef.</div>
-              </div>
-            {{^link}}</div>{{/link}}
-            {{#link}}</a>{{/link}}
+
+            {{#itemSeperator}}<div class="list-group-item p-0 sh-seperator">{{title}}</div>{{/itemSeperator}}
+
+            {{#itemText}}
+              {{^link}}<div class="list-group-item list-group-item-action flex-column align-items-start p-0">{{/link}}
+              {{#link}}<a href="{{link}}" class="list-group-item list-group-item-action flex-column align-items-start p-0">{{/link}}
+                <div class="d-flex">
+                  <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
+                  <div class="align-self-center p-2 sh-title">{{title}}</div>
+                  <div class="align-self-center ml-auto sh-value badge badge-secondary badge-pill">undef.</div>
+                </div>
+              {{^link}}</div>{{/link}}
+              {{#link}}</a>{{/link}}
+            {{/itemText}}
+
+
           {{/items}}
         </div>
       </div>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="webui.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="helper.js"></script>
+    <title>mqtt-smarthome WebUI</title>
+  </head>
+  <body>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pages -->
+    <div id="mainpage" class="sh-page">
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+          <img src="icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+          Smarthome
+        </a>
+        <form class="form-inline">
+          <button class="btn btn-sm btn-outline-success my-2 my-sm-0">Online</button>
+        </form>
+      </nav>
+      <div class="list-group list-group-flush">
+        <div class="list-group-item list-group-item-action flex-column align-items-start p-0">
+          <div class="d-flex">
+            <div class="p-1"><img src="http://via.placeholder.com/50x50" class="sh-icon"></div>
+            <div class="align-self-center p-2 sh-title">Title</div>
+            <div class="align-self-center ml-auto sh-value badge badge-secondary badge-pill">Value</div>
+          </div>
+        </div>
+        <a class="list-group-item list-group-item-action flex-column align-items-start p-0">
+          <div class="d-flex">
+            <div class="p-1"><img src="http://via.placeholder.com/50x50" class="sh-icon"></div>
+            <div class="align-self-center p-2 sh-title">Title</div>
+            <div class="align-self-center ml-auto sh-value">
+              <div class="toggle">
+                <input type="checkbox" id="setting">
+                <label for="setting">&nbsp;</label>
+              </div>
+            </div>
+          </div>
+        </a>
+        <div class="list-group-item p-0 sh-seperator">Seperator</div>
+        <div class="list-group-item list-group-item-action flex-column align-items-start p-0">
+          <div class="d-flex">
+            <div class="p-1"><img src="http://via.placeholder.com/50x50" class="sh-icon"></div>
+            <div class="align-self-center p-2 sh-title">Title</div>
+            <div class="align-self-center ml-auto sh-value">
+              <!-- Control -->
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action flex-column align-items-start p-0">
+          <div class="d-flex">
+            <div class="p-1"><img src="http://via.placeholder.com/50x50" class="sh-icon"></div>
+            <div class="align-self-center p-2 sh-title">Title</div>
+            <div class="align-self-center ml-auto sh-value">
+              <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">On</button>
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action flex-column align-items-start p-0">
+          <div class="d-flex">
+            <div class="p-1"><img src="http://via.placeholder.com/50x50" class="sh-icon"></div>
+            <div class="align-self-center p-2 sh-title">Title</div>
+            <div class="align-self-center ml-auto sh-value">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option2" autocomplete="off"> Radio
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option3" autocomplete="off"> Radio
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item list-group-item-action flex-column align-items-start p-0">
+          <div class="d-flex">
+            <div class="p-1"><img src="http://via.placeholder.com/50x50" class="sh-icon"></div>
+            <div class="align-self-center p-2 sh-title">Title</div>
+            <div class="align-self-center ml-auto sh-value">
+              <!-- Default dropleft button -->
+              <div class="btn-group dropleft">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropleft
+                </button>
+                <div class="dropdown-menu">
+                  <!-- Dropdown menu links -->
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Separated link</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="webui.js"></script>
+    <script>
+      $(function() {
+        $("#setting").click(function() {
+          setTimeout(() => {
+            $(this).prop('checked',true);
+          },1000);
+          return false;
+        });
+      });
+    </script>
+  </body>
+</html>
