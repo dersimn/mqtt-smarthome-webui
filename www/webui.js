@@ -23,6 +23,7 @@ $.getJSON('data.json', function(data) {
         if (page.pageid == 'mainpage') { data.pages[i].mainpage = true; }
 
         $.each(data.pages[i].items, function(j, item) {
+            data.pages[i].items[j].meta = JSON.stringify(item);
             data.pages[i].items[j]['itemtype_'+item.type] = true;
 
             if (item.type == 'switch') { data.pages[i].items[j].switchId = shortId(); };
@@ -44,18 +45,20 @@ $.getJSON('data.json', function(data) {
         client = new Paho.MQTT.Client(location.hostname, Number(location.port), '/mqtt');
         client.onMessageArrived = function(recv) {
             let topic = recv.destinationName;
-            let message = recv.payloadString;
-            message = parsePayload(message);
-
+            let message = parsePayload(recv.payloadString);
+            let val = message;
             if (typeof message == 'object') {
-                var val = message.val;
-            } else {
-                var val = message;
+                val = message.val;
             }
 
             console.log(topic, val, message);
 
-            $('[data-mqtt-topic="'+topic+'"]').text(val);
+            let element = $('[data-mqtt-topic="'+topic+'"]');
+            let meta = element.data('meta');
+            switch (meta.type) {
+                case 'text':
+                    element.text(val);
+            }
         };
         client.onConnectionLost = function() {
             // Handle online/offline Button
