@@ -39,6 +39,13 @@ $.getJSON('data.json', function(data) {
 
         // MQTT
         client = new Paho.MQTT.Client(location.hostname, Number(location.port), '/mqtt');
+        client.onMessageArrived = function(recv) {
+            let topic = recv.destinationName;
+            let message = recv.payloadString;
+            message = parsePayload(message);
+
+            console.log(topic, message);
+        };
         client.onConnectionLost = function() {
             // Handle online/offline Button
             $('[data-mqtt-state]').removeClass('btn-outline-success').addClass('btn-outline-secondary').text('Offline');
