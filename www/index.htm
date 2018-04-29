@@ -7,9 +7,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css">
     <link rel="stylesheet" href="webui.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"></script>
     <title>mqtt-smarthome</title>
   </head>
   <body>
@@ -31,9 +28,9 @@
         <div class="list-group list-group-flush">
           {{#items}}
 
-            {{#itemSeperator}}<div class="list-group-item p-0 sh-seperator">{{title}}</div>{{/itemSeperator}}
+            {{#itemtype_seperator}}<div class="list-group-item p-0 sh-seperator">{{title}}</div>{{/itemtype_seperator}}
 
-            {{#itemText}}
+            {{#itemtype_text}}
               {{^link}}<div class="list-group-item list-group-item-action flex-column align-items-start p-0">{{/link}}
               {{#link}}<a href="{{link}}" class="list-group-item list-group-item-action flex-column align-items-start p-0">{{/link}}
                 <div class="d-flex">
@@ -43,7 +40,7 @@
                 </div>
               {{^link}}</div>{{/link}}
               {{#link}}</a>{{/link}}
-            {{/itemText}}
+            {{/itemtype_text}}
 
 
           {{/items}}
@@ -51,6 +48,9 @@
       </div>
       {{/pages}}
     </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.js"></script>
     <script src="webui.js"></script>

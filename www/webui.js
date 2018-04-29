@@ -17,6 +17,16 @@ function gotToPage(pageHash) {
 $.getJSON("data.json", function(data) {
     console.log("Data loaded");
 
+    // Preflight data
+    $.each(data.pages, function(i, page) {
+    	if (page.pageid == 'mainpage') { data.pages[i].mainpage = true; }
+
+    	$.each(data.pages[i].items, function(j, item) {
+    		data.pages[i].items[j]['itemtype_'+item.type] = true;
+    	});
+    });
+
+    // Mustache
 	$(function() {
 		var template = $('#pageTemplate').html();
 		var rendered = Mustache.render(template, data);
