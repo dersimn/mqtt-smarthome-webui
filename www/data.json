@@ -14,7 +14,7 @@
           "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
           "title": "Power consumption",
           "icon":"http://via.placeholder.com/50x50",
-          "transform": "return Number(value).toFixed(2) + ' W'",
+          "transform": "return Number(msg.power).toFixed(2) + ' W'",
           "link": "#testpage"
         },
         {
@@ -42,7 +42,7 @@
           "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
           "title": "Power consumption",
           "icon":"http://via.placeholder.com/50x50",
-          "transform": "return Number(value).toFixed(2) + ' W'"
+          "transform": "return Number(msg.power).toFixed(2) + ' W'"
         },
         {
           "type":"html",

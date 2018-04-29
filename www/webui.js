@@ -59,9 +59,12 @@ $.getJSON('data.json', function(data) {
             $('[data-mqtt-topic="'+topic+'"]').each(function(i, elem) {
                 let element = $(elem);
                 let meta = element.data('meta');
+                if ('transform' in meta) {
+                    var valTransformed = Function('topic', 'msg', 'val', meta.transform)(topic, message, val);
+                }
                 switch (meta.type) {
                     case 'text':
-                        element.text(val);
+                        element.text(valTransformed || val);
                         break;
                     case 'switch':
                         $('#'+meta.switchId).prop('checked',val);
