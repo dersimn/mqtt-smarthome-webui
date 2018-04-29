@@ -23,11 +23,14 @@ $.getJSON('data.json', function(data) {
         if (page.pageid == 'mainpage') { data.pages[i].mainpage = true; }
 
         $.each(data.pages[i].items, function(j, item) {
-            data.pages[i].items[j].meta = JSON.stringify(item);
+            // Create boolean values for Mustache
             data.pages[i].items[j]['itemtype_'+item.type] = true;
 
+            // Type specific changes
             if (item.type == 'switch') { data.pages[i].items[j].switchId = shortId(); };
 
+            // Handle meta-data
+            data.pages[i].items[j].meta = JSON.stringify(data.pages[i].items[j]);
             if ('topic' in item) { topics.push(item.topic); }
         });
     });
@@ -53,12 +56,18 @@ $.getJSON('data.json', function(data) {
 
             console.log(topic, val, message);
 
-            let element = $('[data-mqtt-topic="'+topic+'"]');
-            let meta = element.data('meta');
-            switch (meta.type) {
-                case 'text':
-                    element.text(val);
-            }
+            $('[data-mqtt-topic="'+topic+'"]').each(function(i, elem) {
+                let element = $(elem);
+                let meta = element.data('meta');
+                switch (meta.type) {
+                    case 'text':
+                        element.text(val);
+                        break;
+                    case 'switch':
+                        $('#'+meta.switchId).prop('checked',val);
+                        break;
+                }
+            });
         };
         client.onConnectionLost = function() {
             // Handle online/offline Button
