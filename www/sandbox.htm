@@ -6,9 +6,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.2/css/bootstrap-slider.css">
     <link rel="stylesheet" href="webui.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="helper.js"></script>
+    <style type="text/css">
+      .slider-horizontal {
+        width: 150px!important;
+      }
+    </style>
     <title>mqtt-smarthome WebUI</title>
   </head>
   <body>
@@ -20,7 +26,7 @@
             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
           </div>
           <div class="modal-body">
-            ...
+            <input id="slider_2" type="text" data-slider-min="0" data-slider-max="100">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -67,6 +73,15 @@
             <div class="align-self-center p-2 sh-title">Title</div>
             <div class="align-self-center ml-auto sh-value">
               <!-- Control -->
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item flex-column align-items-start p-0">
+          <div class="d-flex">
+            <div class="p-1"><img src="http://via.placeholder.com/50x50" class="sh-icon"></div>
+            <div class="align-self-center p-2 sh-title">Title</div>
+            <div class="align-self-center ml-auto sh-value">
+              <input id="slider_1" type="text" data-slider-min="0" data-slider-max="100">
             </div>
           </div>
         </div>
@@ -126,6 +141,7 @@
     <!-- JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.2/bootstrap-slider.js"></script>
     <script src="webui.js"></script>
     <script>
       $(function() {
@@ -135,6 +151,9 @@
           },1000);
           return false;
         });
+
+        $('#slider_1').slider();
+        $('#slider_2').slider();
       });
     </script>
   </body>
