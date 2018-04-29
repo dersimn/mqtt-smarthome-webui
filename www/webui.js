@@ -23,6 +23,8 @@ $.getJSON("data.json", function(data) {
 
     	$.each(data.pages[i].items, function(j, item) {
     		data.pages[i].items[j]['itemtype_'+item.type] = true;
+
+    		if (item.type == 'switch') { data.pages[i].items[j].switchId = shortId(); };
     	});
     });
 
