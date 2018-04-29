@@ -14,7 +14,7 @@ function gotToPage(pageHash) {
 }
 
 // Data loading
-$.getJSON("data.json", function(data) {
+$.getJSON('data.json', function(data) {
     console.log("Data loaded");
 
     // Preflight data
@@ -28,12 +28,24 @@ $.getJSON("data.json", function(data) {
     	});
     });
 
-    // Mustache
 	$(function() {
+		// Mustache
 		var template = $('#pageTemplate').html();
 		var rendered = Mustache.render(template, data);
     	$('body').append(rendered);
 
     	gotToPage(window.location.hash || '#mainpage');
+
+
+    	// MQTT
+    	client = new Paho.MQTT.Client(location.hostname, Number(location.port), '/mqtt');
+    	client.onConnectionLost = function() {
+    		// Handle online/offline Button
+    		$('[data-mqtt-state]').removeClass('btn-outline-success').addClass('btn-outline-secondary').text('Offline');
+    	};
+    	client.connect({onSuccess:function() {
+    		// Handle online/offline Button
+    		$('[data-mqtt-state]').removeClass('btn-outline-secondary').addClass('btn-outline-success').text('Online');
+    	}});
     });
 });
