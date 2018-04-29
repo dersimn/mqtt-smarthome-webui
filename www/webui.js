@@ -58,14 +58,14 @@ $.getJSON('data.json', function(data) {
                 let element = $(elem);
                 let meta = element.data('meta');
                 if ('transform' in meta) {
-                    var valTransformed = Function('topic', 'msg', 'val', meta.transform)(topic, message, val);
+                    var valTransformed = Function('topic', 'message', 'value', meta.transform)(topic, message, val);
                 }
                 switch (meta.type) {
                     case 'text':
                         element.text(valTransformed || val);
                         break;
                     case 'switch':
-                        $('#'+meta.switchId).prop('checked',val);
+                        $('#'+meta.switchId).prop('checked', valTransformed || val);
                         break;
                 }
             });
@@ -87,8 +87,16 @@ $.getJSON('data.json', function(data) {
         // Assign user-action events
         $("[id^=switch]").each(function(i, elem) {
             $(elem).click(function() {
-                let topic = $(elem).data('meta')['topicSet'];
-                let message = String( $(this).prop('checked') );
+                let element = $(elem);
+                let meta = element.data('meta');
+                let topic = meta.topicSet;
+                let input = $(this).prop('checked');
+                if ('transformSet' in meta) {
+                    var inputTransformed = Function('input', meta.transformSet)(input);
+                }
+
+                let message = String( inputTransformed || input );
+
                 console.log(topic, message);
                 client.send(topic, message);
                 return false;

@@ -14,7 +14,7 @@
           "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
           "title": "Power consumption",
           "icon":"http://via.placeholder.com/50x50",
-          "transform": "return Number(msg.power).toFixed(2) + ' W'",
+          "transform": "return Number(message.power).toFixed(2) + ' W'",
           "link": "#testpage"
         },
         {
@@ -26,6 +26,14 @@
           "topicSet": "hs100/set/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
           "type":"switch",
           "title": "Power state"
+        },
+        {
+          "topic": "hue/status/1",
+          "topicSet": "hue/set/1",
+          "type":"switch",
+          "title": "Hue light",
+          "transform": "return value > 0",
+          "transformSet": "return (input) ? '1' : '0'"
         }
       ]
     },
@@ -42,7 +50,7 @@
           "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
           "title": "Power consumption",
           "icon":"http://via.placeholder.com/50x50",
-          "transform": "return Number(msg.power).toFixed(2) + ' W'"
+          "transform": "return Number(message.power).toFixed(2) + ' W'"
         },
         {
           "type":"html",
