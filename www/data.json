@@ -23,7 +23,7 @@
         },
         {
           "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
-          "topic-write": "hs100/set/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+          "topicSet": "hs100/set/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
           "type":"switch",
           "title": "Power state"
         }

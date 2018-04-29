@@ -15,7 +15,7 @@ function gotToPage(pageHash) {
 
 // Data loading
 $.getJSON('data.json', function(data) {
-    console.log("Data loaded");
+    console.log('Data loaded');
     let topics = [];
 
     // Preflight data
@@ -27,7 +27,7 @@ $.getJSON('data.json', function(data) {
             data.pages[i].items[j]['itemtype_'+item.type] = true;
 
             // Type specific changes
-            if (item.type == 'switch') { data.pages[i].items[j].switchId = shortId(); };
+            if (item.type == 'switch') { data.pages[i].items[j].switchId = 'switch_'+shortId(); };
 
             // Handle meta-data
             data.pages[i].items[j].meta = JSON.stringify(data.pages[i].items[j]);
@@ -36,13 +36,11 @@ $.getJSON('data.json', function(data) {
     });
 
     $(function() {
-        // Mustache
+        // Mustache create UI
         var template = $('#pageTemplate').html();
         var rendered = Mustache.render(template, data);
         $('body').append(rendered);
-
         gotToPage(window.location.hash || '#mainpage');
-
 
         // MQTT
         client = new Paho.MQTT.Client(location.hostname, Number(location.port), '/mqtt');
@@ -85,5 +83,16 @@ $.getJSON('data.json', function(data) {
                 client.subscribe(topic);
             });
         }});
+
+        // Assign user-action events
+        $("[id^=switch]").each(function(i, elem) {
+            $(elem).click(function() {
+                let topic = $(elem).data('meta')['topicSet'];
+                let message = String( $(this).prop('checked') );
+                console.log(topic, message);
+                client.send(topic, message);
+                return false;
+            });
+        });
     });
 });
