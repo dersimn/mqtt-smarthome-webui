@@ -16,6 +16,7 @@ function gotToPage(pageHash) {
 // Data loading
 $.getJSON('data.json', function(data) {
     console.log("Data loaded");
+    let topics = [];
 
     // Preflight data
     $.each(data.pages, function(i, page) {
@@ -25,6 +26,8 @@ $.getJSON('data.json', function(data) {
             data.pages[i].items[j]['itemtype_'+item.type] = true;
 
             if (item.type == 'switch') { data.pages[i].items[j].switchId = shortId(); };
+
+            if ('topic' in item) { topics.push(item.topic); }
         });
     });
 
@@ -44,7 +47,15 @@ $.getJSON('data.json', function(data) {
             let message = recv.payloadString;
             message = parsePayload(message);
 
-            console.log(topic, message);
+            if (typeof message == 'object') {
+                var val = message.val;
+            } else {
+                var val = message;
+            }
+
+            console.log(topic, val, message);
+
+            $('[data-mqtt-topic="'+topic+'"]').text(val);
         };
         client.onConnectionLost = function() {
             // Handle online/offline Button
@@ -53,6 +64,11 @@ $.getJSON('data.json', function(data) {
         client.connect({onSuccess:function() {
             // Handle online/offline Button
             $('[data-mqtt-state]').removeClass('btn-outline-secondary').addClass('btn-outline-success').text('Online');
+
+            // Subscribe
+            $.each(topics, function(i, topic) {
+                client.subscribe(topic);
+            });
         }});
     });
 });
