@@ -6,9 +6,9 @@ function gotToPage(pageHash) {
     console.log('gotToPage', pageHash);
     $(".sh-page").each(function() {
         if ($(this).is(pageHash)) {
-            $(this).css('left','0%');
+            $(this).css('left','0%').css('position', 'static');
         } else {
-            $(this).css('left','100%');
+            $(this).css('left','100%').css('position', 'fixed');
         }
     });
 }
