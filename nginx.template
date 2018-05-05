@@ -82,38 +82,49 @@ http {
         server_name     _;
         listen          80;
         listen          [::]:80;
-        listen          443 ssl;
-        listen          [::]:443 ssl;
 
-        # Redirect
-        if ($internal_ip = no) {
-            set $test A;
-        }
-        if ($scheme = http) {
-            set $test  "${test}B"; 
-        }
-        if ($test = AB) { 
-            return 301 https://$host$request_uri;
-            break; 
-        }
+        {{#ENABLE_HTTPS}}
+            listen          443 ssl;
+            listen          [::]:443 ssl;
 
-        ssl_certificate         /ssl/nginx.crt;
-        ssl_certificate_key     /ssl/nginx.key;
-        ssl_client_certificate  /ssl/client.crt;
-        ssl_crl                 /ssl/client.crl;
-        ssl_verify_client       optional;
+            # Redirect
+            if ($internal_ip = no) {
+                set $test A;
+            }
+            if ($scheme = http) {
+                set $test  "${test}B"; 
+            }
+            if ($test = AB) { 
+                return 301 https://$host$request_uri;
+                break; 
+            }
 
-        # Workaround for workaround
-        # Setting cookies with Lua messes up the MIME type, causing html page to download instead of being openend in browser
-        # see: https://github.com/openresty/openresty/issues/52
-        location = / {
-            rewrite ^ /index.htm last;
-        }
+            # SSL certificates
+            ssl_certificate         /ssl/nginx.crt;
+            ssl_certificate_key     /ssl/nginx.key;
+
+            {{#SSL_CLIENT_AUTH}}
+                # SSL client-authentification
+                ssl_client_certificate  /ssl/client.crt;
+                {{#SSL_CLIENT_AUTH_CRL}}
+                    ssl_crl             /ssl/client.crl;
+                {{/SSL_CLIENT_AUTH_CRL}}
+                ssl_verify_client       optional;
+
+                # Workaround for workaround
+                # Setting cookies with Lua messes up the MIME type, causing html page to download instead of being openend in browser
+                # see: https://github.com/openresty/openresty/issues/52
+                location = / {
+                    rewrite ^ /index.htm last;
+                }
+            {{/SSL_CLIENT_AUTH}}
+        {{/ENABLE_HTTPS}}
 
         location / {
             root   /www;
             index  index.htm index.html;
 
+            {{#SSL_CLIENT_AUTH}}
             if ($access_allowed = no) {
                 return 403;
             }
@@ -141,37 +152,42 @@ http {
                     end
                 }
             }
+            {{/SSL_CLIENT_AUTH}}
         }
 
-        location /mqtt {
-            proxy_pass          http://10.1.1.50:9001;
-            proxy_http_version  1.1;
-            proxy_set_header    Upgrade        $http_upgrade;
-            proxy_set_header    Connection     "upgrade";
+        {{#MQTT_HOST}}
+            location /mqtt {
+                proxy_pass          http://{{MQTT_HOST}};
+                proxy_http_version  1.1;
+                proxy_set_header    Upgrade        $http_upgrade;
+                proxy_set_header    Connection     "upgrade";
 
-            # Workaround for iOS devices - Part 2
-            if ($access_allowed = no) {
-                access_by_lua_block {
-                    local HMAC_SECRET = "hunter2"
-                    local crypto = require "crypto"
+                {{#SSL_CLIENT_AUTH}}
+                # Workaround for iOS devices - Part 2
+                if ($access_allowed = no) {
+                    access_by_lua_block {
+                        local HMAC_SECRET = "hunter2"
+                        local crypto = require "crypto"
 
-                    if ngx.var.ssl_client_verify == "NONE" then
-                      client = ngx.var.cookie_ClientId
-                      client_hmac = ngx.var.cookie_AccessToken
-                      access_expires = ngx.var.cookie_AccessExpires
+                        if ngx.var.ssl_client_verify == "NONE" then
+                          client = ngx.var.cookie_ClientId
+                          client_hmac = ngx.var.cookie_AccessToken
+                          access_expires = ngx.var.cookie_AccessExpires
 
-                      if client ~= nil and client_hmac ~= nil and access_expires ~= nil then
-                        hmac = crypto.hmac.digest("sha256", string.format("%s%d", client, access_expires), HMAC_SECRET)
+                          if client ~= nil and client_hmac ~= nil and access_expires ~= nil then
+                            hmac = crypto.hmac.digest("sha256", string.format("%s%d", client, access_expires), HMAC_SECRET)
 
-                        if hmac ~= "" and hmac == client_hmac and tonumber(access_expires) > ngx.time() then
-                          return
+                            if hmac ~= "" and hmac == client_hmac and tonumber(access_expires) > ngx.time() then
+                              return
+                            end
+                          end
                         end
-                      end
-                    end
 
-                    ngx.exit(ngx.HTTP_FORBIDDEN)
+                        ngx.exit(ngx.HTTP_FORBIDDEN)
+                    }
                 }
+                {{/SSL_CLIENT_AUTH}}
             }
-        }
+        {{/MQTT_HOST}}
     }
 }
