@@ -50,3 +50,8 @@ body {
     color: #fff;
     transform: translateX(1.8em);
 }
+
+/* Remove Button focus */
+.focus {
+    box-shadow: none!important;
+}
