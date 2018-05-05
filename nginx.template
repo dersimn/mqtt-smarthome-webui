@@ -160,7 +160,7 @@ http {
                 proxy_pass          http://{{MQTT_HOST}};
                 proxy_http_version  1.1;
                 proxy_set_header    Upgrade        $http_upgrade;
-                proxy_set_header    Connection     "upgrade";
+                proxy_set_header    Connection     $connection_upgrade;
 
                 {{#SSL_CLIENT_AUTH}}
                 # Workaround for iOS devices - Part 2
