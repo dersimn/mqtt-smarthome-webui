@@ -13,6 +13,16 @@ function gotToPage(pageHash) {
     });
 }
 
+// Page Layout
+function dynamicListGroup() {
+    if ($(this).width() < 575) {
+      $('.list-group').addClass('list-group-flush');
+    } else {
+      $('.list-group').removeClass('list-group-flush');
+    }
+}
+$(window).resize(dynamicListGroup);
+
 // Data loading
 $.getJSON('data.json', function(data) {
     console.log('Data loaded');
@@ -22,24 +32,29 @@ $.getJSON('data.json', function(data) {
     $.each(data.pages, function(i, page) {
         if (page.pageid == 'mainpage') { data.pages[i].mainpage = true; }
 
-        $.each(data.pages[i].items, function(j, item) {
-            // Create boolean values for Mustache
-            data.pages[i].items[j]['itemtype_'+item.type] = true;
+        $.each(page.sections, function(j, section) {
+            $.each(section.items, function(k, item) {
+                // Create boolean values for Mustache
+                data.pages[i].sections[j].items[k]['itemtype_'+item.type] = true;
 
-            // Type specific changes
-            if (item.type == 'switch') { data.pages[i].items[j].switchId = 'switch_'+shortId(); };
+                // Type specific changes
+                if (item.type == 'switch') { data.pages[i].sections[j].items[k].switchId = 'switch_'+shortId(); };
 
-            // Handle meta-data
-            data.pages[i].items[j].meta = JSON.stringify(data.pages[i].items[j]);
-            if ('topic' in item) { topics.push(item.topic); }
+                // Handle meta-data
+                data.pages[i].sections[j].items[k].meta = JSON.stringify(item);
+
+                if ('topic' in item) { topics.push(item.topic); }
+            });
         });
     });
+
 
     $(function() {
         // Mustache create UI
         var template = $('#pageTemplate').html();
         var rendered = Mustache.render(template, data);
         $('body').append(rendered);
+        $(dynamicListGroup);
         gotToPage(window.location.hash || '#mainpage');
 
         // MQTT

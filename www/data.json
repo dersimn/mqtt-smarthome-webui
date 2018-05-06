@@ -3,58 +3,61 @@
     {
       "pageid":"mainpage",
       "pageicon":"icon.png",
-      "title":"Smarthome",
-      "items":[
+      "pagetitle":"Smarthome",
+      "sections": [
         {
-          "type":"seperator",
-          "title": "Room 1"
+          "sectiontitle": "Room 1",
+          "items": [
+            {
+              "type":"text",
+              "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+              "title": "Power consumption",
+              "icon":"http://via.placeholder.com/50x50",
+              "transform": "return Number(message.power).toFixed(2) + ' W'",
+              "link": "#testpage"
+            }
+          ]
         },
         {
-          "type":"text",
-          "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
-          "title": "Power consumption",
-          "icon":"http://via.placeholder.com/50x50",
-          "transform": "return Number(message.power).toFixed(2) + ' W'",
-          "link": "#testpage"
-        },
-        {
-          "type":"seperator",
-          "title":"Room 2"
-        },
-        {
-          "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
-          "topicSet": "hs100/set/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
-          "type":"switch",
-          "title": "Power state"
-        },
-        {
-          "topic": "hue/status/1",
-          "topicSet": "hue/set/1",
-          "type":"switch",
-          "title": "Hue light",
-          "transform": "return value > 0",
-          "transformSet": "return (input) ? '1' : '0'"
+          "sectiontitle": "Room 1",
+          "items": [
+            {
+              "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+              "topicSet": "hs100/set/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+              "type":"switch",
+              "title": "Power state"
+            },
+            {
+              "topic": "hue/status/1",
+              "topicSet": "hue/set/1",
+              "type":"switch",
+              "title": "Hue light",
+              "transform": "return value > 0",
+              "transformSet": "return (input) ? '1' : '0'"
+            }
+          ]
         }
       ]
     },
     {
       "pageid":"testpage",
-      "title":"Sub-Page",
-      "items":[
+      "pagetitle":"Sub-Page",
+      "sections": [
         {
-          "type":"seperator",
-          "title":"Test Room"
-        },
-        {
-          "type":"text",
-          "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
-          "title": "Power consumption",
-          "icon":"http://via.placeholder.com/50x50",
-          "transform": "return Number(message.power).toFixed(2) + ' W'"
-        },
-        {
-          "type":"html",
-          "html": "<div class=\"list-group-item\">Hello World!</div>"
+          "sectiontitle": "Test Room",
+          "items": [
+            {
+              "type":"text",
+              "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+              "title": "Power consumption",
+              "icon":"http://via.placeholder.com/50x50",
+              "transform": "return Number(message.power).toFixed(2) + ' W'"
+            },
+            {
+              "type":"html",
+              "html": "<div class=\"list-group-item\">Hello World!</div>"
+            }
+          ]
         }
       ]
     }
