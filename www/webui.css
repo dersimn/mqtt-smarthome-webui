@@ -12,6 +12,7 @@ body {
 }
 .sh-seperator {
     background-color: #f8f9fa;
+    padding-left: 1em!important;
 }
 
 .sh-page {
@@ -62,4 +63,9 @@ body {
         padding-left: 0;
         padding-right: 0;
     }
+}
+
+/* Revert no bottom line */
+.list-group-flush:last-child {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
