@@ -41,6 +41,12 @@ $.getJSON('data.json', function(data) {
                 if (item.type == 'switch') { data.pages[i].sections[j].items[k].switchId = 'switch_'+shortId(); };
 
                 // Handle meta-data
+                if (/[\/]{2}/.test(item.topic)) { // foo//bar
+                    if (!('topicSet' in item)) {
+                        item.topicSet = item.topic.replace('//', '/set/');
+                    }
+                    item.topic = item.topic.replace('//', '/status/');
+                }
                 data.pages[i].sections[j].items[k].meta = JSON.stringify(item);
 
                 if ('topic' in item) { topics.push(item.topic); }

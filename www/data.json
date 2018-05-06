@@ -22,14 +22,20 @@
           "sectiontitle": "Room 1",
           "items": [
             {
-              "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
-              "topicSet": "hs100/set/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+              "topic": "hs100//800630F5F2DF76599D6487862FB8BF6718FEFFE0",
               "type":"switch",
               "title": "Power state"
             },
             {
               "topic": "hue/status/1",
               "topicSet": "hue/set/1",
+              "type":"switch",
+              "title": "Hue light",
+              "transform": "return value > 0",
+              "transformSet": "return (input) ? '1' : '0'"
+            },
+            {
+              "topic": "hue//1",
               "type":"switch",
               "title": "Hue light",
               "transform": "return value > 0",
