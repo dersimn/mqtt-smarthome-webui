@@ -19,11 +19,11 @@ You can configure HTTPS and client certificates by providing these files:
 * `/ssl/client.crt`
 * `/ssl/client.crl`
 
-A nice tutorial on how to generate your own certificates, is located [here](https://jamielinux.com/docs/openssl-certificate-authority/introduction.html). Maybe I'll provide an automated solution in the future. The whole command would look like this:
+A nice tutorial on how to generate your own certificates, is located [here](https://jamielinux.com/docs/openssl-certificate-authority/introduction.html). Maybe I'll provide an automated solution in the future. The whole command could look like this:
 
     docker run -d --restart=always \
         -v $(pwd)/yourconfig.json:/www/data.json:ro \
-        -v $(pwd)/www:/www:ro \
+        -v $(pwd)/ssl:/ssl:ro \
         -e "MQTT_HOST=10.1.1.50:9001" \
         -p 80:80 \
         dersimn/mqtt-smarthome-webui
