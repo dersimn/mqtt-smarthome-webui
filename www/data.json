@@ -9,37 +9,46 @@
           "sectiontitle": "Room 1",
           "items": [
             {
+              "type": "switch",
+              "topic": "hs100//800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+              "title": "Stereo"
+            },
+            {
               "type":"text",
-              "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+              "topic": "hs100//800630F5F2DF76599D6487862FB8BF6718FEFFE0",
               "title": "Power consumption",
               "icon":"http://via.placeholder.com/50x50",
-              "transform": "return Number(message.power).toFixed(2) + ' W'",
-              "link": "#testpage"
+              "transform": "return Number(message.power).toFixed(2) + ' W'"
             }
           ]
         },
         {
-          "sectiontitle": "Room 1",
+          "sectiontitle": "Room 2",
           "items": [
-            {
-              "topic": "hs100//800630F5F2DF76599D6487862FB8BF6718FEFFE0",
-              "type":"switch",
-              "title": "Power state"
-            },
             {
               "topic": "hue/status/1",
               "topicSet": "hue/set/1",
               "type":"switch",
-              "title": "Hue light",
+              "title": "Hue light 1",
               "transform": "return value > 0",
               "transformSet": "return (input) ? '1' : '0'"
             },
             {
               "topic": "hue//1",
               "type":"switch",
-              "title": "Hue light",
+              "title": "Hue light 1",
               "transform": "return value > 0",
               "transformSet": "return (input) ? '1' : '0'"
+            }
+          ]
+        },
+        {
+          "sectiontitle": "Room 3",
+          "items": [
+            {
+              "type": "text",
+              "title": "Page link",
+              "link": "#testpage"
             }
           ]
         }
@@ -47,21 +56,19 @@
     },
     {
       "pageid":"testpage",
-      "pagetitle":"Sub-Page",
+      "pagetitle":"Some Sub-Page",
       "sections": [
         {
           "sectiontitle": "Test Room",
           "items": [
             {
               "type":"text",
-              "topic": "hs100/status/800630F5F2DF76599D6487862FB8BF6718FEFFE0",
-              "title": "Power consumption",
-              "icon":"http://via.placeholder.com/50x50",
-              "transform": "return Number(message.power).toFixed(2) + ' W'"
+              "topic": "hs100//800630F5F2DF76599D6487862FB8BF6718FEFFE0",
+              "title": "Topics refresh on background pages"
             },
             {
               "type":"html",
-              "html": "<div class=\"list-group-item\">Hello World!</div>"
+              "html": "<link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'><div class='list-group-item'><span style='font-family: \"Great Vibes\";'>Hello World!</span></div>"
             }
           ]
         }
