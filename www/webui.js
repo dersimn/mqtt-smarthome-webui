@@ -39,6 +39,7 @@ $.getJSON('data.json', function(data) {
 
                 // Type specific changes
                 if (item.type == 'switch') { data.pages[i].sections[j].items[k].switchId = 'switch_'+shortId(); };
+                if (item.type == 'button') { data.pages[i].sections[j].items[k].switchId = 'switch_'+shortId(); };
 
                 // Handle meta-data
                 if (/[\/]{2}/.test(item.topic)) { // foo//bar
@@ -92,6 +93,13 @@ $.getJSON('data.json', function(data) {
                     case 'switch':
                         $('#'+meta.switchId).prop('checked', valTransformed || val);
                         break;
+                    case 'button':
+                        if (element.data('mqtt-value') == (valTransformed || val)) {
+                            element.addClass('active');
+                        } else {
+                            element.removeClass('active');
+                        }
+                        break;
                 }
             });
         };
@@ -125,6 +133,23 @@ $.getJSON('data.json', function(data) {
                 console.log(topic, message);
                 client.send(topic, message);
                 return false;
+            });
+        });
+
+        $("button").each(function(i, elem) {
+            $(elem).click(function() {
+                let element = $(elem);
+                let meta = element.data('meta');
+                let topic = meta.topicSet;
+                let input = element.data('mqtt-value');
+                if ('transformSet' in meta) {
+                    var inputTransformed = Function('input', meta.transformSet)(input);
+                }
+
+                let message = String( inputTransformed || input );
+
+                console.log(topic, message);
+                client.send(topic, message);
             });
         });
     });

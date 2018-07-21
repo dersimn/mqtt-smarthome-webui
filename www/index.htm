@@ -62,6 +62,22 @@
                     </div>
                   {{/itemtype_switch}}
 
+                  {{#itemtype_button}}
+                    <div class="list-group-item flex-column align-items-start p-0">
+                      <div class="d-flex">
+                        <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
+                        <div class="align-self-center p-2 sh-title">{{title}}</div>
+                        <div class="align-self-center ml-auto sh-value">
+                          <div class="btn-group" role="group">
+                            {{#buttons}}
+                              <button type="button" class="btn btn-secondary" data-mqtt-value="{{value}}" data-mqtt-topic="{{topic}}" data-meta="{{meta}}">{{label}}</button>
+                            {{/buttons}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {{/itemtype_button}}
+
                   {{#itemtype_html}}
                     {{{html}}}
                   {{/itemtype_html}}

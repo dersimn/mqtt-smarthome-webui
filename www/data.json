@@ -39,6 +39,21 @@
               "title": "Hue light 1",
               "transform": "return value > 0",
               "transformSet": "return (input) ? '1' : '0'"
+            },
+            {
+              "topic": "var//mode",
+              "type": "button",
+              "title": "Mode Switch",
+              "buttons": [
+                {
+                  "label": "Auto",
+                  "value": "auto"
+                },
+                {
+                  "label": "Manual",
+                  "value": "manu"
+                }
+              ]
             }
           ]
         },
