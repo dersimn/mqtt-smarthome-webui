@@ -69,3 +69,21 @@ body {
 .list-group-flush:last-child {
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
+
+.modal-dialog, .modal-content, .modal-body {
+    height: 100%;
+}
+
+.modal-dialog {
+    margin: 0;
+}
+
+.modal-content {
+    border: 0;
+    border-radius: 0;
+}
+
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(2px);
+}
