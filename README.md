@@ -36,9 +36,9 @@ A nice tutorial on how to generate your own certificates, is located [here](http
 
 Run:
 
-    docker run                       -p 80:80            <id>
-    docker run -v $(pwd)/ssl:/ssl:ro -p 80:80 -p 443:443 <id>
+    docker run                       -p 80:80            -e "MQTT_HOST=10.1.1.101:9001" <id>
+    docker run -v $(pwd)/ssl:/ssl:ro -p 80:80 -p 443:443 -e "MQTT_HOST=10.1.1.101:9001" <id>
 
 For development, start a Docker Container with the following command, changes to files in `/www` are applied without rebuilding the container:
 
-    docker run -v $(pwd)/www:/www:ro -v $(pwd)/ssl:/ssl:ro -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf -p 80:80 -p 443:443 <id>
+    docker run -v $(pwd)/www:/www:ro -v $(pwd)/ssl:/ssl:ro -p 80:80 -p 443:443 -e "MQTT_HOST=10.1.1.101:9001" <id>
