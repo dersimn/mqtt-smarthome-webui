@@ -70,20 +70,37 @@ body {
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
-.modal-dialog, .modal-content, .modal-body {
-    height: 100%;
+@media only screen and (max-width: 574px) {
+    .modal-dialog, .modal-content, .modal-body {
+        height: 100%;
+    }
+
+    .modal-dialog {
+        margin: 0;
+    }
+
+    .modal-content {
+        border: 0;
+        border-radius: 0;
+    }
+
+    .modal-content {
+        background-color: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(2px);
+    }
 }
 
-.modal-dialog {
-    margin: 0;
+/* Slider Styling*/
+.modal-body .slider-horizontal {
+    width: 100%!important;
 }
 
-.modal-content {
-    border: 0;
-    border-radius: 0;
+.slider-handle {
+    background: 0;
+    background-color: rgb(107, 116, 125);
 }
-
-.modal-content {
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(2px);
+.slider-selection {
+    background: 0;
+    background-color: rgb(156, 156, 156);
+    box-shadow: none;
 }
