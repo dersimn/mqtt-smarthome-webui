@@ -96,14 +96,10 @@ body {
 }
 .slider {
     -webkit-appearance: none;
-    /*width: 100%;*/
     height: 10px;
     border-radius: 5px;   
     background: #ccc;
     outline: none;
-    /*opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;*/
 }
 
 .slider::-webkit-slider-thumb {
@@ -114,6 +110,7 @@ body {
     border-radius: 50%; 
     background: #6c757d;
     cursor: pointer;
+    box-shadow:var(--c,0) 0 0 #ccc; /*https://stackoverflow.com/a/51571070/1997890*/
 }
 
 .slider::-moz-range-thumb {
@@ -122,4 +119,5 @@ body {
     border-radius: 50%;
     background: #6c757d;
     cursor: pointer;
+    box-shadow:var(--c,0) 0 0 #ccc; /*https://stackoverflow.com/a/51571070/1997890*/
 }
