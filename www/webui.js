@@ -38,8 +38,13 @@ $.getJSON('data.json', function(data) {
                 data.pages[i].sections[j].items[k]['itemtype_'+item.type] = true;
 
                 // Type specific changes
-                if (item.type == 'switch') { data.pages[i].sections[j].items[k].switchId = 'switch_'+shortId(); };
-                if (item.type == 'button') { data.pages[i].sections[j].items[k].switchId = 'switch_'+shortId(); };
+                if (item.type == 'switch') { data.pages[i].sections[j].items[k].switchId = 'switch_'+shortId(); }
+                if (item.type == 'slider') {
+                    data.pages[i].sections[j].items[k].sliderId = 'slider_'+shortId();
+                    data.pages[i].sections[j].items[k].sliderMinValue = ('sliderMinValue' in item) ? item.sliderMinValue : 0.0;
+                    data.pages[i].sections[j].items[k].sliderMaxValue = ('sliderMaxValue' in item) ? item.sliderMaxValue : 1.0;
+                    data.pages[i].sections[j].items[k].sliderStepValue = ('sliderStepValue' in item) ? item.sliderStepValue : 'any';
+                }
 
                 // Handle meta-data
                 if (/[\/]{2}/.test(item.topic)) { // foo//bar
@@ -100,6 +105,11 @@ $.getJSON('data.json', function(data) {
                             element.removeClass('active');
                         }
                         break;
+                    case 'slider':
+                        $('#'+meta.sliderId).val(valTransformed || val);
+                        $('#'+meta.sliderId).data('last-mqtt-value', valTransformed || val);
+                        $('#'+meta.sliderId).get(0).style.setProperty("--c",0);
+                        break;
                 }
             });
         };
@@ -151,6 +161,28 @@ $.getJSON('data.json', function(data) {
                 console.log(topic, message);
                 client.send(topic, message);
             });
+        });
+
+        $('[id^=slider]').on('input', function() {
+            $(this).get(0).style.setProperty("--c",
+                ($(this).data('last-mqtt-value') - $(this).val()) /
+                ($(this).attr('max')-$(this).attr('min')) *
+                ($(this).width() - 20) +'px' /*width of wrapper - width of thumb*/
+            );
+        });
+        $('[id^=slider]').on('change', function() {
+            let element = $(this);
+            let meta = element.data('meta');
+            let topic = meta.topicSet;
+            let input = element.val();
+            if ('transformSet' in meta) {
+                var inputTransformed = Function('input', meta.transformSet)(input);
+            }
+
+            let message = String( inputTransformed || input );
+
+            console.log(topic, message);
+            client.send(topic, message);
         });
     });
 });

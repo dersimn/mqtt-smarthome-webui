@@ -54,6 +54,13 @@
                   "value": "manu"
                 }
               ]
+            },
+            {
+              "topic": "hue//1",
+              "type":"slider",
+              "title": "Hue light 1",
+              "sliderMinValue": 0,
+              "sliderMaxValue": 1.0
             }
           ]
         },
