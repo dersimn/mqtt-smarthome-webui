@@ -26,7 +26,10 @@ A nice tutorial on how to generate your own certificates, is located [here](http
         -v $(pwd)/ssl:/ssl:ro \
         -e "MQTT_HOST=10.1.1.50:9001" \
         -p 80:80 \
+        -p 443:443 \
         dersimn/mqtt-smarthome-webui
+
+If you want to change the default ports, specify it like this: `-p 8001:80 -p 8443:443 -e "HTTPS_REDIRECT_PORT=8443"`.
 
 ## Development
 
@@ -42,3 +45,8 @@ Run:
 For development, start a Docker Container with the following command, changes to files in `/www` are applied without rebuilding the container:
 
     docker run -v $(pwd)/www:/www:ro -v $(pwd)/ssl:/ssl:ro -p 80:80 -p 443:443 -e "MQTT_HOST=10.1.1.101:9001" <id>
+    docker run -v $(pwd)/www:/www:ro -p 80:80 -e "MQTT_HOST=10.1.1.101:9001" <id>
+
+## Credits
+
+This project follows [Oliver "owagner" Wagner](https://github.com/owagner)'s architectural proposal for an [mqtt-smarthome](https://github.com/mqtt-smarthome/mqtt-smarthome). Set of [basic icons](https://dribbble.com/shots/2084609-Smart-House-Icon-Set-Free) freely provided by [Roman "Minsk" Malashov](https://dribbble.com/Miart).
