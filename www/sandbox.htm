@@ -134,7 +134,13 @@
                   <div class="p-1"><img src="http://via.placeholder.com/50x50" class="sh-icon"></div>
                   <div class="align-self-center p-2 sh-title">Title</div>
                   <div class="align-self-center ml-auto sh-value">
-                    <!-- Control -->
+                    <select class="custom-select custom-select-md bg-secondary text-light" id="select_1">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -207,6 +213,7 @@
         });
 
         $('[id^=slider]').data('last-mqtt-value', 0.5);
+        $('[id^=select]').data('last-mqtt-value', 1);
 
         $('[id^=slider]').on('input', function() {
           $(this).get(0).style.setProperty("--c",
@@ -224,6 +231,23 @@
           setTimeout(() => {
             $(this).data('last-mqtt-value', $(this).val());
             $(this).get(0).style.setProperty("--c",0);
+          },5000);
+          // */
+        });
+
+        $('[id^=select]').on('focusin', function() {
+          console.log('select focusin', this.value);
+        });
+        $('[id^=select]').on('change', function() {
+          console.log('select change', this.value);
+          let newVal = this.value;
+          $(this).val($(this).data('last-mqtt-value'));
+
+          // Simulate new input value incoming
+          ///*
+          setTimeout(() => {
+            $(this).data('last-mqtt-value', newVal);
+            $(this).val(newVal);
           },5000);
           // */
         });
