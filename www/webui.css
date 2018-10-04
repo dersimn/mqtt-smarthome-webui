@@ -138,3 +138,25 @@ body {
         rgb(255,0,0)
         );
 }
+
+.revert-width { /* needed to place .custom-selevt inline with other elements */
+    width: unset;
+}
+
+/* https://www.w3schools.com/howto/howto_css_loader.asp */
+.loader {
+    border: 4px solid #ccc; /* Pick even numbers here */
+    border-top: 4px solid #6c757d; /* Pick even numbers here */
+    border-radius: 50%;
+    width: 32px; /* Pick even numbers here */
+    height: 32px; /* Pick even numbers here */
+    animation: spin 1.5s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
