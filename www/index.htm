@@ -15,7 +15,7 @@
     <script id="pageTemplate" type="text/template">
       {{#pages}}
       <div id="{{pageid}}" class="sh-page">
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-light bg-light fixed-top">
           {{^mainpage}}<button class="btn btn-sm btn-outline-secondary" onClick="window.history.back();">Back</button>{{/mainpage}}
           <a class="navbar-brand" href="#">
             {{#pageicon}}<img src="{{pageicon}}" width="30" height="30" class="d-inline-block align-top" alt="">{{/pageicon}}
