@@ -25,7 +25,7 @@ function dynamicListGroup() {
 $(window).resize(dynamicListGroup);
 
 $(window).scroll(function() {
-    if ($(this).scrollTop() <= 0) {
+    if ($(this).scrollTop() > 0) {
         $('div.sh-page-active nav').addClass('shadow');
     } else {
         $('nav').removeClass('shadow');
