@@ -5,6 +5,10 @@ body {
 a {
     color: #212529;
 }
+a:hover {
+    color: unset;
+    text-decoration: none;
+}
 
 .sh-icon {
     height: 40px;
