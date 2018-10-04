@@ -88,6 +88,23 @@
                     </div>
                   {{/itemtype_slider}}
 
+                  {{#itemtype_select}}
+                    <div class="list-group-item flex-column align-items-start p-0">
+                      <div class="d-flex">
+                        <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
+                        <div class="align-self-center p-2 sh-title">{{title}}</div>
+                        <div class="align-self-center ml-auto sh-value">
+                          <div id="{{selectId}}_loader"></div>
+                          <select id="{{selectId}}" class="custom-select custom-select-md bg-secondary text-light revert-width" data-mqtt-topic="{{topic}}" data-meta="{{meta}}">
+                            {{#selectOptions}}
+                              <option value="{{value}}">{{label}}</option>
+                            {{/selectOptions}}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  {{/itemtype_select}}
+
                   {{#itemtype_html}}
                     {{{html}}}
                   {{/itemtype_html}}

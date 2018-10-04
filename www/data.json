@@ -56,6 +56,21 @@
               ]
             },
             {
+              "topic": "var//mode",
+              "type": "select",
+              "title": "Mode Switch",
+              "selectOptions": [
+                {
+                  "label": "Auto",
+                  "value": "auto"
+                },
+                {
+                  "label": "Manual",
+                  "value": "manu"
+                }
+              ]
+            },
+            {
               "topic": "hue//1",
               "type":"slider",
               "title": "Hue light 1",

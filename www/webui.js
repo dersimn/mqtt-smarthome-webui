@@ -45,6 +45,7 @@ $.getJSON('data.json', function(data) {
                     data.pages[i].sections[j].items[k].sliderMaxValue = ('sliderMaxValue' in item) ? item.sliderMaxValue : 1.0;
                     data.pages[i].sections[j].items[k].sliderStepValue = ('sliderStepValue' in item) ? item.sliderStepValue : 'any';
                 }
+                if (item.type == 'select') { data.pages[i].sections[j].items[k].selectId = 'select_'+shortId(); }
 
                 // Handle meta-data
                 if (/[\/]{2}/.test(item.topic)) { // foo//bar
@@ -109,6 +110,11 @@ $.getJSON('data.json', function(data) {
                         $('#'+meta.sliderId).val(valTransformed || val);
                         $('#'+meta.sliderId).data('last-mqtt-value', valTransformed || val);
                         $('#'+meta.sliderId).get(0).style.setProperty("--c",0);
+                        break;
+                    case 'select':
+                        $('#'+meta.selectId).val(valTransformed || val);
+                        $('#'+meta.selectId).data('last-mqtt-value', valTransformed || val);
+                        $('#'+meta.selectId+'_loader').removeClass('loader');
                         break;
                 }
             });
@@ -183,6 +189,23 @@ $.getJSON('data.json', function(data) {
 
             console.log(topic, message);
             client.send(topic, message);
+        });
+
+        $('[id^=select]').on('change', function() {
+            let meta = $(this).data('meta');
+            let topic = meta.topicSet;
+            let input = $(this).val();
+            if ('transformSet' in meta) {
+                var inputTransformed = Function('input', meta.transformSet)(input);
+            }
+
+            let message = String( inputTransformed || input );
+
+            console.log(topic, message);
+            client.send(topic, message);
+
+            $(this).val($(this).data('last-mqtt-value')); // Reset to last known state
+            $('#'+$(this).attr('id')+'_loader').addClass('loader'); // Show loader
         });
     });
 });
