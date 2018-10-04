@@ -1,6 +1,9 @@
 body {
     background-color: #f8f9fa;
 }
+a {
+    color: #212529;
+}
 
 .sh-icon {
     height: 40px;
