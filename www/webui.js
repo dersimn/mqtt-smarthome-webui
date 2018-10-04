@@ -9,6 +9,7 @@ function gotToPage(pageHash) {
             $(this).removeClass('sh-page-hidden').addClass('sh-page-active');
         } else {
             $(this).removeClass('sh-page-active').addClass('sh-page-hidden');
+            $(this).find('nav').removeClass('shadow');
         }
     });
 }
@@ -24,7 +25,7 @@ function dynamicListGroup() {
 $(window).resize(dynamicListGroup);
 
 $(window).scroll(function() {
-    if ($(this).scrollTop() != 0) {
+    if ($(this).scrollTop() <= 0) {
         $('div.sh-page-active nav').addClass('shadow');
     } else {
         $('nav').removeClass('shadow');
