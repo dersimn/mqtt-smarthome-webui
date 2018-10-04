@@ -6,9 +6,9 @@ function gotToPage(pageHash) {
     console.log('gotToPage', pageHash);
     $(".sh-page").each(function() {
         if ($(this).is(pageHash)) {
-            $(this).css('left','0%').css('position', 'static');
+            $(this).removeClass('sh-page-hidden').addClass('sh-page-active');
         } else {
-            $(this).css('left','100%').css('position', 'fixed');
+            $(this).removeClass('sh-page-active').addClass('sh-page-hidden');
         }
     });
 }
@@ -25,7 +25,7 @@ $(window).resize(dynamicListGroup);
 
 $(window).scroll(function() {
     if ($(this).scrollTop() != 0) {
-        $('nav').addClass('shadow');
+        $('div.sh-page-active nav').addClass('shadow');
     } else {
         $('nav').removeClass('shadow');
     }

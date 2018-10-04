@@ -22,6 +22,14 @@ a {
 .sh-page {
     width: 100%;
 }
+.sh-page-active {
+    left: 0%;
+    position: static;
+}
+.sh-page-hidden {
+    left: 100%;
+    position: fixed;
+}
 
 /* Toggle Checkbox/Button
    https://gist.github.com/adactio/ade708ef8d45350790e8 */
