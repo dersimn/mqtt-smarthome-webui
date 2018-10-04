@@ -121,3 +121,20 @@ body {
     cursor: pointer;
     box-shadow:var(--c,0) 0 0 #ccc; /*https://stackoverflow.com/a/51571070/1997890*/
 }
+
+.colorpicker {
+    width: 100%;
+}
+
+.sliderRGB { 
+    background: linear-gradient(
+        to right,
+        rgb(255,0,0),
+        rgb(255,255,0),
+        rgb(0,255,0),
+        rgb(0,255,255),
+        rgb(0,0,255),
+        rgb(255,0,255),
+        rgb(255,0,0)
+        );
+}

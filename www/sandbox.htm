@@ -20,7 +20,10 @@
             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
           </div>
           <div class="modal-body">
-            <input id="slider_2" type="range" class="slider" min="50" max="60" step="1">
+            <canvas class="colorpicker"></canvas>
+            <input id="slider_2" type="range" class="slider sliderRGB" min="0" max="1" step="any">
+            <input id="slider_3" type="range" class="slider" min="0" max="1" step="any">
+            <input id="slider_4" type="range" class="slider" min="0" max="1" step="any">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -225,6 +228,31 @@
           // */
         });
 
+        $('.colorpicker').each(function(e) {
+          let canvas = $(this).get(0);
+          var context = canvas.getContext("2d");
+          var x = canvas.width / 2;
+          var y = canvas.height / 2;
+          var radius = (canvas.width > canvas.height) ? canvas.height/2 : canvas.width/2;
+          var thickness = 0.4;
+
+          for(var angle=0; angle<=360; angle+=1){
+              var startAngle = (angle-2)*Math.PI/180;
+              var endAngle = angle * Math.PI/180;
+              context.beginPath();
+              context.arc(x, y, (1-thickness/2)*radius, startAngle, endAngle, false);
+              context.lineWidth = thickness*radius;
+              context.strokeStyle = 'hsl('+angle+', 100%, 50%)';
+              context.stroke();
+          }
+
+          context.beginPath();
+          context.arc(x, y, radius*(1-thickness-0.1), 0, 2*Math.PI, false);
+          context.closePath();
+          context.fillStyle = 'hsl('+0+', 100%, 50%)';
+          context.fill();
+
+        });
       });
 
       function dynamicListGroup() {
