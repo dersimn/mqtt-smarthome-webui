@@ -292,6 +292,14 @@
       }
       $(window).resize(dynamicListGroup);
       $(dynamicListGroup);
+
+      $(window).scroll(function() {
+        if ($(this).scrollTop() != 0) {
+          $('nav').addClass('shadow');
+        } else {
+          $('nav').removeClass('shadow');
+        }
+      });
     </script>
   </body>
 </html>

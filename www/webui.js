@@ -23,6 +23,14 @@ function dynamicListGroup() {
 }
 $(window).resize(dynamicListGroup);
 
+$(window).scroll(function() {
+    if ($(this).scrollTop() != 0) {
+        $('nav').addClass('shadow');
+    } else {
+        $('nav').removeClass('shadow');
+    }
+});
+
 // Data loading
 $.getJSON('data.json', function(data) {
     console.log('Data loaded');
