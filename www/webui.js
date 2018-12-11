@@ -84,7 +84,7 @@ $.getJSON('data.json', function(data) {
         let ssl = location.protocol == 'https:';
         let mqttUrl = 'ws'+ ((ssl)?'s':'') +'://'+location.hostname+((location.port != '') ? ':' : '')+location.port+'/mqtt';
         console.log('MQTT conenct to', mqttUrl);
-        client = new Paho.MQTT.Client(mqttUrl, 'webui_'+shortId());
+        client = new Paho.Client(mqttUrl, 'webui_'+shortId());
         client.onMessageArrived = function(recv) {
             let topic = recv.destinationName;
             let message = parsePayload(recv.payloadString);
