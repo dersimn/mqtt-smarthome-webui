@@ -128,19 +128,35 @@ $.getJSON('data.json', function(data) {
                 }
             });
         };
+
+        // Handle connect / disconnect
         client.onConnectionLost = function() {
             // Handle online/offline Button
             $('[data-mqtt-state]').removeClass('btn-outline-success').addClass('btn-outline-secondary').text('Offline');
+
+            setTimeout(function() {
+                client.connect({reconnect:true});
+            }, 500);
         };
-        client.connect({onSuccess:function() {
+
+        client.onConnected = function(reconnect) {
             // Handle online/offline Button
             $('[data-mqtt-state]').removeClass('btn-outline-secondary').addClass('btn-outline-success').text('Online');
 
             // Subscribe
-            $.each(topics, function(i, topic) {
-                client.subscribe(topic);
-            });
-        }});
+            if (!reconnect) {
+                $.each(topics, function(i, topic) {
+                    client.subscribe(topic);
+                });
+            }
+        };
+        client.connect({reconnect:true});
+
+        $(window).focus(function() {
+            if (!client.isConnected()) {
+                client.connect({reconnect:true});
+            }
+        });
 
         // Assign user-action events
         $("[id^=switch]").each(function(i, elem) {
