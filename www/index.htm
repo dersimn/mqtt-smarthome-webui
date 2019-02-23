@@ -16,13 +16,13 @@
       {{#pages}}
       <div id="{{pageid}}" class="sh-page">
         <nav class="navbar navbar-light bg-light fixed-top">
-          {{^mainpage}}<button class="btn btn-sm btn-outline-secondary" onClick="window.history.back();">Back</button>{{/mainpage}}
+          {{^mainpage}}<button class="btn btn-sm btn-outline-secondary btn-feather-back" onClick="window.history.back();"><i data-feather="arrow-left"></i></button>{{/mainpage}}
           <a class="navbar-brand" href="#">
             {{#pageicon}}<img src="{{pageicon}}" width="30" height="30" class="d-inline-block align-top" alt="">{{/pageicon}}
             {{pagetitle}}
           </a>
           {{#mainpage}}
-            <button class="btn btn-sm btn-outline-secondary" onClick="window.location.reload(true)" data-mqtt-state>Offline</button>
+            <button class="btn btn-sm btn-outline-secondary" onClick="window.location.reload(true)" data-mqtt-state><i data-feather="wifi-off"></i></button>
           {{/mainpage}}
         </nav>
         <div class="container-fluid">
@@ -127,6 +127,7 @@
     <script src="https://cdn.jsdelivr.net/npm/paho-mqtt@1.1.0/paho-mqtt.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="helper.js"></script>
     <script src="webui.js"></script>
   </body>

@@ -77,6 +77,7 @@ $.getJSON('data.json', function(data) {
         var rendered = Mustache.render(template, data);
         $('body').append(rendered);
         $(dynamicListGroup);
+        feather.replace();
         gotToPage(window.location.hash || '#mainpage');
 
         // MQTT

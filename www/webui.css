@@ -176,3 +176,12 @@ a:hover {
     100% { transform: rotate(360deg); }
 }
 
+.btn-feather-back {
+    height: 31px;
+    border: 0;
+    padding: 0;
+}
+.btn-feather-back svg {
+    height: 31px;
+    width: 31px;
+}
