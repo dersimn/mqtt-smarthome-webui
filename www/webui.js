@@ -133,7 +133,12 @@ $.getJSON('data.json', function(data) {
         // Handle connect / disconnect
         client.onConnectionLost = function() {
             // Handle online/offline Button
-            $('[data-mqtt-state]').removeClass('btn-outline-success').addClass('btn-outline-secondary').text('Offline');
+            $('[data-mqtt-state]')
+                .removeClass('btn-outline-success')
+                .addClass('btn-outline-secondary')
+                .html(
+                    feather.icons['wifi-off'].toSvg()
+            );
 
             setTimeout(function() {
                 client.connect({reconnect:true});
@@ -142,7 +147,12 @@ $.getJSON('data.json', function(data) {
 
         client.onConnected = function(reconnect) {
             // Handle online/offline Button
-            $('[data-mqtt-state]').removeClass('btn-outline-secondary').addClass('btn-outline-success').text('Online');
+            $('[data-mqtt-state]')
+                .removeClass('btn-outline-secondary')
+                .addClass('btn-outline-success')
+                .html(
+                    feather.icons['wifi'].toSvg()
+            );
 
             // Subscribe
             if (!reconnect) {
