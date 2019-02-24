@@ -13,7 +13,8 @@ pages:
     - title: Hue bulb
       type: slider
       topic: hue//2
-      transformSet: return JSON.stringify({hue:15.9/360,sat:1,val:Number(input)})
+      transform:
+        set: return JSON.stringify({hue:15.9/360,sat:1,val:Number(input)})
       icon: icons/bulb.png
   - sectiontitle: Security
     items:

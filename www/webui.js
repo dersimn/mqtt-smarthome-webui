@@ -107,7 +107,14 @@ $.get('data.yaml', function(yamlfile) {
                 let element = $(elem);
                 let meta = element.data('meta');
                 if ('transform' in meta) {
-                    var valTransformed = Function('topic', 'message', 'value', meta.transform)(topic, message, val);
+                    if (typeof meta.transform == 'string') {
+                        var valTransformed = Function('topic', 'message', 'value', meta.transform)(topic, message, val);
+                    }
+                    if (typeof meta.transform == 'object') {
+                        if ('get' in meta.transform) {
+                            var valTransformed = Function('topic', 'message', 'value', meta.transform.get)(topic, message, val);
+                        }
+                    }
                 }
                 switch (meta.type) {
                     case 'text':
@@ -181,8 +188,12 @@ $.get('data.yaml', function(yamlfile) {
                 if (topic == null) return false;
 
                 let input = $(this).prop('checked');
-                if ('transformSet' in meta) {
-                    var inputTransformed = Function('input', meta.transformSet)(input);
+                if ('transform' in meta) {
+                    if (typeof meta.transform == 'object') {
+                        if ('set' in meta.transform) {
+                            var inputTransformed = Function('input', meta.transform.set)(input);
+                        }
+                    }
                 }
 
                 let message = String( inputTransformed || input );
@@ -201,8 +212,12 @@ $.get('data.yaml', function(yamlfile) {
                 if (topic == null) return;
 
                 let input = element.data('mqtt-value');
-                if ('transformSet' in meta) {
-                    var inputTransformed = Function('input', meta.transformSet)(input);
+                if ('transform' in meta) {
+                    if (typeof meta.transform == 'object') {
+                        if ('set' in meta.transform) {
+                            var inputTransformed = Function('input', meta.transform.set)(input);
+                        }
+                    }
                 }
 
                 let message = String( inputTransformed || input );
@@ -226,8 +241,12 @@ $.get('data.yaml', function(yamlfile) {
             if (topic == null) return;
 
             let input = element.val();
-            if ('transformSet' in meta) {
-                var inputTransformed = Function('input', meta.transformSet)(input);
+            if ('transform' in meta) {
+                if (typeof meta.transform == 'object') {
+                    if ('set' in meta.transform) {
+                        var inputTransformed = Function('input', meta.transform.set)(input);
+                    }
+                }
             }
 
             let message = String( inputTransformed || input );
@@ -242,8 +261,12 @@ $.get('data.yaml', function(yamlfile) {
             if (topic == null) return;
 
             let input = $(this).val();
-            if ('transformSet' in meta) {
-                var inputTransformed = Function('input', meta.transformSet)(input);
+            if ('transform' in meta) {
+                if (typeof meta.transform == 'object') {
+                    if ('set' in meta.transform) {
+                        var inputTransformed = Function('input', meta.transform.set)(input);
+                    }
+                }
             }
 
             let message = String( inputTransformed || input );
