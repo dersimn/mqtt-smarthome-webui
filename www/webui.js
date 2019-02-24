@@ -62,8 +62,13 @@ $.get('data.yaml', function(yamlfile) {
                 if (typeof item.topic == 'string') {
                     const tmp = item.topic;
                     item.topic = {};
-                    item.topic.get = tmp.replace('//', '/status/');
-                    item.topic.set = tmp.replace('//', '/set/');
+                    if (/[\/]{2}/.test(tmp)) { // foo//bar
+                        item.topic.get = tmp.replace('//', '/status/');
+                        item.topic.set = tmp.replace('//', '/set/');
+                    } else {
+                        item.topic.get = tmp;
+                        item.topic.set = null;
+                    }
                 }
                 data.pages[i].sections[j].items[k].meta = JSON.stringify(item);
 
@@ -173,6 +178,8 @@ $.get('data.yaml', function(yamlfile) {
                 let element = $(elem);
                 let meta = element.data('meta');
                 let topic = meta.topic.set;
+                if (topic == null) return false;
+
                 let input = $(this).prop('checked');
                 if ('transformSet' in meta) {
                     var inputTransformed = Function('input', meta.transformSet)(input);
@@ -191,6 +198,8 @@ $.get('data.yaml', function(yamlfile) {
                 let element = $(elem);
                 let meta = element.data('meta');
                 let topic = meta.topic.set;
+                if (topic == null) return;
+
                 let input = element.data('mqtt-value');
                 if ('transformSet' in meta) {
                     var inputTransformed = Function('input', meta.transformSet)(input);
@@ -214,6 +223,8 @@ $.get('data.yaml', function(yamlfile) {
             let element = $(this);
             let meta = element.data('meta');
             let topic = meta.topic.set;
+            if (topic == null) return;
+
             let input = element.val();
             if ('transformSet' in meta) {
                 var inputTransformed = Function('input', meta.transformSet)(input);
@@ -228,6 +239,8 @@ $.get('data.yaml', function(yamlfile) {
         $('[id^=select]').on('change', function() {
             let meta = $(this).data('meta');
             let topic = meta.topic.set;
+            if (topic == null) return;
+
             let input = $(this).val();
             if ('transformSet' in meta) {
                 var inputTransformed = Function('input', meta.transformSet)(input);
