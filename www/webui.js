@@ -33,7 +33,8 @@ $(window).scroll(function() {
 });
 
 // Data loading
-$.getJSON('data.json', function(data) {
+$.get('data.yaml', function(yamlfile) {
+    var data = jsyaml.load(yamlfile);
     console.log('Data loaded');
     let topics = [];
 
