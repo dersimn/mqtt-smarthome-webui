@@ -59,15 +59,15 @@ $.get('data.yaml', function(yamlfile) {
                 if (item.type == 'button') { data.pages[i].sections[j].items[k].buttonId = 'button_'+shortId(); }
 
                 // Handle meta-data
-                if (/[\/]{2}/.test(item.topic)) { // foo//bar
-                    if (!('topicSet' in item)) {
-                        item.topicSet = item.topic.replace('//', '/set/');
-                    }
-                    item.topic = item.topic.replace('//', '/status/');
+                if (typeof item.topic == 'string') {
+                    const tmp = item.topic;
+                    item.topic = {};
+                    item.topic.get = tmp.replace('//', '/status/');
+                    item.topic.set = tmp.replace('//', '/set/');
                 }
                 data.pages[i].sections[j].items[k].meta = JSON.stringify(item);
 
-                if ('topic' in item) { topics.push(item.topic); }
+                if ('topic' in item) { topics.push(item.topic.get); }
             });
         });
     });
@@ -172,7 +172,7 @@ $.get('data.yaml', function(yamlfile) {
             $(elem).click(function() {
                 let element = $(elem);
                 let meta = element.data('meta');
-                let topic = meta.topicSet;
+                let topic = meta.topic.set;
                 let input = $(this).prop('checked');
                 if ('transformSet' in meta) {
                     var inputTransformed = Function('input', meta.transformSet)(input);
@@ -190,7 +190,7 @@ $.get('data.yaml', function(yamlfile) {
             $(elem).click(function() {
                 let element = $(elem);
                 let meta = element.data('meta');
-                let topic = meta.topicSet;
+                let topic = meta.topic.set;
                 let input = element.data('mqtt-value');
                 if ('transformSet' in meta) {
                     var inputTransformed = Function('input', meta.transformSet)(input);
@@ -213,7 +213,7 @@ $.get('data.yaml', function(yamlfile) {
         $('[id^=slider]').on('change', function() {
             let element = $(this);
             let meta = element.data('meta');
-            let topic = meta.topicSet;
+            let topic = meta.topic.set;
             let input = element.val();
             if ('transformSet' in meta) {
                 var inputTransformed = Function('input', meta.transformSet)(input);
@@ -227,7 +227,7 @@ $.get('data.yaml', function(yamlfile) {
 
         $('[id^=select]').on('change', function() {
             let meta = $(this).data('meta');
-            let topic = meta.topicSet;
+            let topic = meta.topic.set;
             let input = $(this).val();
             if ('transformSet' in meta) {
                 var inputTransformed = Function('input', meta.transformSet)(input);

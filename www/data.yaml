@@ -25,7 +25,7 @@ pages:
     items:
     - title: Current Temperature
       type: text
-      topic: hm/status/XYZ0000001/1/TEMPERATURE
+      topic: hm//XYZ0000001/1/TEMPERATURE
       transform: return Number(value).toFixed(1) + '°C'
     - title: Set Temperature
       type: select
@@ -102,8 +102,9 @@ pages:
       - label: Full
         value: '30.5'
     - title: Mode Dropdown
-      topic: hm//XYZ0000001/2/CONTROL_MODE
-      topicSet: var/set/control_mode_set
+      topic: 
+        get: hm/status/XYZ0000001/2/CONTROL_MODE
+        set: var/set/control_mode_set
       type: select
       selectOptions:
       - label: Auto
@@ -111,8 +112,9 @@ pages:
       - label: Manual
         value: '1'
     - title: Mode Buttons
-      topic: hm//XYZ0000001/2/CONTROL_MODE
-      topicSet: var/set/control_mode_set
+      topic: 
+        get: hm/status/XYZ0000001/2/CONTROL_MODE
+        set: var/set/control_mode_set
       type: button
       buttons:
       - label: Auto
