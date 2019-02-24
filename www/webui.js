@@ -55,6 +55,7 @@ $.getJSON('data.json', function(data) {
                     data.pages[i].sections[j].items[k].sliderStepValue = ('sliderStepValue' in item) ? item.sliderStepValue : 'any';
                 }
                 if (item.type == 'select') { data.pages[i].sections[j].items[k].selectId = 'select_'+shortId(); }
+                if (item.type == 'button') { data.pages[i].sections[j].items[k].buttonId = 'button_'+shortId(); }
 
                 // Handle meta-data
                 if (/[\/]{2}/.test(item.topic)) { // foo//bar
@@ -184,7 +185,7 @@ $.getJSON('data.json', function(data) {
             });
         });
 
-        $("button").each(function(i, elem) {
+        $('[id^=button]').each(function(i, elem) {
             $(elem).click(function() {
                 let element = $(elem);
                 let meta = element.data('meta');
