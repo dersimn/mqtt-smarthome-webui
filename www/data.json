@@ -11,13 +11,15 @@
             {
               "type": "switch",
               "topic": "hue//1",
-              "title": "On/Off"
+              "title": "On/Off",
+              "icon": "icons/socket_f.png"
             },
             {
               "type": "slider",
               "topic": "hue//2",
               "title": "Hue bulb",
-              "transformSet": "return JSON.stringify({hue:15.9/360,sat:1,val:Number(input)})"
+              "transformSet": "return JSON.stringify({hue:15.9/360,sat:1,val:Number(input)})",
+              "icon": "icons/bulb.png"
             }
           ]
         },
