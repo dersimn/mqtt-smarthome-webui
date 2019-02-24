@@ -90,6 +90,7 @@ a:hover {
 @media only screen and (max-width: 574px) {
     .modal-dialog, .modal-content, .modal-body {
         height: 100%;
+        overflow: scroll;
     }
 
     .modal-dialog {
@@ -104,6 +105,7 @@ a:hover {
     .modal-content {
         background-color: rgba(255, 255, 255, 0.9);
         backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px); /* Safari */
     }
 }
 
