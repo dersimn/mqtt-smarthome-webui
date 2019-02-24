@@ -140,9 +140,7 @@ $.getJSON('data.json', function(data) {
                     feather.icons['wifi-off'].toSvg()
             );
 
-            setTimeout(function() {
-                client.connect({reconnect:true});
-            }, 500);
+            setTimeout(client.connect, 500);
         };
 
         client.onConnected = function(reconnect) {
@@ -155,17 +153,15 @@ $.getJSON('data.json', function(data) {
             );
 
             // Subscribe
-            if (!reconnect) {
-                $.each(topics, function(i, topic) {
-                    client.subscribe(topic);
-                });
-            }
+            $.each(topics, function(i, topic) {
+                client.subscribe(topic);
+            });
         };
-        client.connect({reconnect:true});
+        client.connect();
 
         $(window).focus(function() {
             if (!client.isConnected()) {
-                client.connect({reconnect:true});
+                setTimeout(client.connect, 500);
             }
         });
 
