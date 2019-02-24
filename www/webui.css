@@ -11,8 +11,9 @@ a:hover {
 }
 
 .sh-icon {
-    height: 40px;
-    width: 40px;
+    height: 32px;
+    width: 32px;
+    margin: 4px;
 }
 .sh-value {
     font-size: 100%;
