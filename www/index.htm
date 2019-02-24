@@ -16,12 +16,12 @@
       {{#pages}}
       <div id="{{pageid}}" class="sh-page">
         <nav class="navbar navbar-light bg-light fixed-top">
-          {{^mainpage}}<button class="btn btn-sm btn-outline-secondary btn-feather-back" onClick="window.history.back();"><i data-feather="arrow-left"></i></button>{{/mainpage}}
+          {{^mainpage}}<button class="btn btn-sm btn-outline-secondary btn-feather" onClick="window.history.back();"><i data-feather="arrow-left"></i></button>{{/mainpage}}
           <a class="navbar-brand" href="#">
             {{#pageicon}}<img src="{{pageicon}}" width="30" height="30" class="d-inline-block align-top" alt="">{{/pageicon}}
             {{pagetitle}}
           </a>
-          <button class="btn btn-sm btn-outline-secondary btn-feather-connection" onClick="window.location.reload(true)" data-mqtt-state><i data-feather="wifi-off"></i></button>
+          <button class="btn btn-sm btn-outline-secondary btn-feather" onClick="window.location.reload(true)" data-mqtt-state><i data-feather="wifi-off"></i></button>
         </nav>
         <div class="container-fluid">
           <div class="row">
