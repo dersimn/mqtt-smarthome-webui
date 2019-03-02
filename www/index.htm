@@ -32,23 +32,20 @@
                 {{#items}}
 
                   {{#itemtype_text}}
-                    {{^link}}<div class="list-group-item flex-column align-items-start p-0">{{/link}}
-                    {{#link}}<a href="{{link}}" class="list-group-item flex-column align-items-start p-0">{{/link}}
+                    <div class="list-group-item flex-column align-items-start p-0">
                       <div class="d-flex">
                         <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
-                        <div class="align-self-center p-2 sh-title">{{title}}</div>
+                        <a {{#link}}href="{{link}}"{{/link}} class="align-self-center p-2 sh-title">{{title}}</a>
                         {{#topic}}<div class="align-self-center ml-auto sh-value badge badge-secondary badge-pill" data-mqtt-topic="{{topic.get}}" data-meta="{{meta}}">undef.</div>{{/topic}}
                       </div>
-                    {{^link}}</div>{{/link}}
-                    {{#link}}</a>{{/link}}
+                    </div>
                   {{/itemtype_text}}
 
                   {{#itemtype_switch}}
                     <div class="list-group-item flex-column align-items-start p-0">
                       <div class="d-flex">
                         <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
-                        {{^link}}<div class="align-self-center p-2 sh-title">{{title}}</div>{{/link}}
-                        {{#link}}<a href="{{link}}" class="align-self-center p-2 sh-title">{{title}}</a>{{/link}}
+                        <a {{#link}}href="{{link}}"{{/link}} class="align-self-center p-2 sh-title">{{title}}</a>
                         <div class="align-self-center ml-auto sh-value">
                           <div class="toggle">
                             <input type="checkbox" id="{{switchId}}" data-mqtt-topic="{{topic.get}}" data-meta="{{meta}}">
@@ -63,8 +60,7 @@
                     <div class="list-group-item flex-column align-items-start p-0">
                       <div class="d-flex">
                         <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
-                        {{^link}}<div class="align-self-center p-2 sh-title">{{title}}</div>{{/link}}
-                        {{#link}}<a href="{{link}}" class="align-self-center p-2 sh-title">{{title}}</a>{{/link}}
+                        <a {{#link}}href="{{link}}"{{/link}} class="align-self-center p-2 sh-title">{{title}}</a>
                         <div class="align-self-center ml-auto sh-value">
                           <div class="btn-group" role="group">
                             {{#buttons}}
@@ -80,8 +76,7 @@
                     <div class="list-group-item flex-column align-items-start p-0">
                       <div class="d-flex">
                         <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
-                        {{^link}}<div class="align-self-center p-2 sh-title">{{title}}</div>{{/link}}
-                        {{#link}}<a href="{{link}}" class="align-self-center p-2 sh-title">{{title}}</a>{{/link}}
+                        <a {{#link}}href="{{link}}"{{/link}} class="align-self-center p-2 sh-title">{{title}}</a>
                         <div class="align-self-center ml-auto sh-value">
                           <input id="{{sliderId}}" type="range" class="slider" min="{{sliderMinValue}}" max="{{sliderMaxValue}}" step="{{sliderStepValue}}" data-mqtt-topic="{{topic.get}}" data-meta="{{meta}}">
                         </div>
@@ -93,8 +88,7 @@
                     <div class="list-group-item flex-column align-items-start p-0">
                       <div class="d-flex">
                         <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
-                        {{^link}}<div class="align-self-center p-2 sh-title">{{title}}</div>{{/link}}
-                        {{#link}}<a href="{{link}}" class="align-self-center p-2 sh-title">{{title}}</a>{{/link}}
+                        <a {{#link}}href="{{link}}"{{/link}} class="align-self-center p-2 sh-title">{{title}}</a>
                         <div class="align-self-center ml-auto sh-value">
                           <div id="{{selectId}}_loader"></div>
                           <select id="{{selectId}}" class="custom-select custom-select-md bg-secondary text-light revert-width" data-mqtt-topic="{{topic.get}}" data-meta="{{meta}}">
