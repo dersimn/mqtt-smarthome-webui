@@ -37,15 +37,18 @@ If you want to change the default ports, specify it like this: `-p 8001:80 -p 84
     cd mqtt-smarthome-webui
     docker build .
 
-Run:
-
-    docker run                       -p 80:80            -e "MQTT_HOST=10.1.1.101:9001" <id>
-    docker run -v $(pwd)/ssl:/ssl:ro -p 80:80 -p 443:443 -e "MQTT_HOST=10.1.1.101:9001" <id>
-
 For development, start a Docker Container with the following command, changes to files in `/www` are applied without rebuilding the container:
 
+    docker run -v $(pwd)/www:/www:ro                       -p 80:80            -e "MQTT_HOST=10.1.1.101:9001" <id>
     docker run -v $(pwd)/www:/www:ro -v $(pwd)/ssl:/ssl:ro -p 80:80 -p 443:443 -e "MQTT_HOST=10.1.1.101:9001" <id>
-    docker run -v $(pwd)/www:/www:ro -p 80:80 -e "MQTT_HOST=10.1.1.101:9001" <id>
+
+For a simple simulation environment consider also running
+
+    git clone https://github.com/dersimn/mqtt-smarthome-demo.git
+    cd mqtt-smarthome-demo
+    docker-compose up -d mqtt admin logic
+
+in background.
 
 ## Credits
 
