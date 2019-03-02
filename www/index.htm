@@ -34,7 +34,7 @@
                   {{#itemtype_text}}
                     <div class="list-group-item flex-column align-items-start p-0">
                       <div class="d-flex">
-                        <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
+                        <div class="p-1"><img src="{{icon}}" class="sh-icon {{^icon}}sh-no-icon{{/icon}}"></div>
                         <a {{#link}}href="{{link}}"{{/link}} class="align-self-center p-2 sh-title">{{title}}</a>
                         {{#topic}}<div class="align-self-center ml-auto sh-value badge badge-secondary badge-pill" data-mqtt-topic="{{topic.get}}" data-meta="{{meta}}">undef.</div>{{/topic}}
                       </div>
@@ -44,7 +44,7 @@
                   {{#itemtype_switch}}
                     <div class="list-group-item flex-column align-items-start p-0">
                       <div class="d-flex">
-                        <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
+                        <div class="p-1"><img src="{{icon}}" class="sh-icon {{^icon}}sh-no-icon{{/icon}}"></div>
                         <a {{#link}}href="{{link}}"{{/link}} class="align-self-center p-2 sh-title">{{title}}</a>
                         <div class="align-self-center ml-auto sh-value">
                           <div class="toggle">
@@ -59,7 +59,7 @@
                   {{#itemtype_button}}
                     <div class="list-group-item flex-column align-items-start p-0">
                       <div class="d-flex">
-                        <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
+                        <div class="p-1"><img src="{{icon}}" class="sh-icon {{^icon}}sh-no-icon{{/icon}}"></div>
                         <a {{#link}}href="{{link}}"{{/link}} class="align-self-center p-2 sh-title">{{title}}</a>
                         <div class="align-self-center ml-auto sh-value">
                           <div class="btn-group" role="group">
@@ -75,7 +75,7 @@
                   {{#itemtype_slider}}
                     <div class="list-group-item flex-column align-items-start p-0">
                       <div class="d-flex">
-                        <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
+                        <div class="p-1"><img src="{{icon}}" class="sh-icon {{^icon}}sh-no-icon{{/icon}}"></div>
                         <a {{#link}}href="{{link}}"{{/link}} class="align-self-center p-2 sh-title">{{title}}</a>
                         <div class="align-self-center ml-auto sh-value">
                           <input id="{{sliderId}}" type="range" class="slider" min="{{sliderMinValue}}" max="{{sliderMaxValue}}" step="{{sliderStepValue}}" data-mqtt-topic="{{topic.get}}" data-meta="{{meta}}">
@@ -87,7 +87,7 @@
                   {{#itemtype_select}}
                     <div class="list-group-item flex-column align-items-start p-0">
                       <div class="d-flex">
-                        <div class="p-1"><img src="{{icon}}" class="sh-icon" {{^icon}}style="visibility:hidden;"{{/icon}}></div>
+                        <div class="p-1"><img src="{{icon}}" class="sh-icon {{^icon}}sh-no-icon{{/icon}}"></div>
                         <a {{#link}}href="{{link}}"{{/link}} class="align-self-center p-2 sh-title">{{title}}</a>
                         <div class="align-self-center ml-auto sh-value">
                           <div id="{{selectId}}_loader"></div>

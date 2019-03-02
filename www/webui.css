@@ -15,6 +15,9 @@ a:hover {
     width: 32px;
     margin: 4px;
 }
+.sh-no-icon {
+    visibility: hidden;
+}
 .sh-value {
     font-size: 100%;
     margin-right: 1em;
