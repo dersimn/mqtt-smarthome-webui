@@ -118,26 +118,26 @@ $.get('data.yaml', function(yamlfile) {
                 }
                 switch (meta.type) {
                     case 'text':
-                        element.text(valTransformed || val);
+                        element.text((valTransformed !== undefined) ? valTransformed : val);
                         break;
                     case 'switch':
-                        $('#'+meta.switchId).prop('checked', valTransformed || val);
+                        $('#'+meta.switchId).prop('checked', (valTransformed !== undefined) ? valTransformed : val);
                         break;
                     case 'button':
-                        if (element.data('mqtt-value') == (valTransformed || val)) {
+                        if (element.data('mqtt-value') == ((valTransformed !== undefined) ? valTransformed : val) {
                             element.addClass('active');
                         } else {
                             element.removeClass('active');
                         }
                         break;
                     case 'slider':
-                        $('#'+meta.sliderId).val(valTransformed || val);
-                        $('#'+meta.sliderId).data('last-mqtt-value', valTransformed || val);
+                        $('#'+meta.sliderId).val((valTransformed !== undefined) ? valTransformed : val);
+                        $('#'+meta.sliderId).data('last-mqtt-value', (valTransformed !== undefined) ? valTransformed : val);
                         $('#'+meta.sliderId).get(0).style.setProperty("--c",0);
                         break;
                     case 'select':
-                        $('#'+meta.selectId).val(valTransformed || val);
-                        $('#'+meta.selectId).data('last-mqtt-value', valTransformed || val);
+                        $('#'+meta.selectId).val((valTransformed !== undefined) ? valTransformed : val);
+                        $('#'+meta.selectId).data('last-mqtt-value', (valTransformed !== undefined) ? valTransformed : val);
                         $('#'+meta.selectId+'_loader').removeClass('loader');
                         break;
                 }
@@ -196,7 +196,7 @@ $.get('data.yaml', function(yamlfile) {
                     }
                 }
 
-                let message = String( inputTransformed || input );
+                let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
                 console.log(topic, message);
                 client.send(topic, message);
@@ -220,7 +220,7 @@ $.get('data.yaml', function(yamlfile) {
                     }
                 }
 
-                let message = String( inputTransformed || input );
+                let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
                 console.log(topic, message);
                 client.send(topic, message);
@@ -249,7 +249,7 @@ $.get('data.yaml', function(yamlfile) {
                 }
             }
 
-            let message = String( inputTransformed || input );
+            let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
             console.log(topic, message);
             client.send(topic, message);
@@ -269,7 +269,7 @@ $.get('data.yaml', function(yamlfile) {
                 }
             }
 
-            let message = String( inputTransformed || input );
+            let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
             console.log(topic, message);
             client.send(topic, message);
