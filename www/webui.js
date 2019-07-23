@@ -124,7 +124,7 @@ $.get('data.yaml', function(yamlfile) {
                         $('#'+meta.switchId).prop('checked', (valTransformed !== undefined) ? valTransformed : val);
                         break;
                     case 'button':
-                        if (element.data('mqtt-value') == ((valTransformed !== undefined) ? valTransformed : val) {
+                        if (element.data('mqtt-value') == ((valTransformed !== undefined) ? valTransformed : val)) {
                             element.addClass('active');
                         } else {
                             element.removeClass('active');
