@@ -131,7 +131,7 @@ $(window).scroll(function() {
     mqtt.connect();
 
     mqtt.subscribe(topics, (topic, message) => {
-        if (message.val) {
+        if (typeof message === 'object' && 'val' in message) {
             var val = message.val;
         } else {
             var val = message;
