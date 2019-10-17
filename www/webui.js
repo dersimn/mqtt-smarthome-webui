@@ -60,15 +60,13 @@ $.get('data.yaml', function(yamlfile) {
                 data.pages[i].sections[j].items[k]['itemtype_'+item.type] = true;
 
                 // Type specific changes
-                if (item.type == 'switch') { data.pages[i].sections[j].items[k].switchId = 'switch_'+shortid.generate(); }
+                data.pages[i].sections[j].items[k][item.type+'Id'] = item.type + '_' + shortid.generate();
                 if (item.type == 'slider') {
                     data.pages[i].sections[j].items[k].sliderId = 'slider_'+shortid.generate();
                     data.pages[i].sections[j].items[k].sliderMinValue = ('sliderMinValue' in item) ? item.sliderMinValue : 0.0;
                     data.pages[i].sections[j].items[k].sliderMaxValue = ('sliderMaxValue' in item) ? item.sliderMaxValue : 1.0;
                     data.pages[i].sections[j].items[k].sliderStepValue = ('sliderStepValue' in item) ? item.sliderStepValue : 'any';
                 }
-                if (item.type == 'select') { data.pages[i].sections[j].items[k].selectId = 'select_'+shortid.generate(); }
-                if (item.type == 'button') { data.pages[i].sections[j].items[k].buttonId = 'button_'+shortid.generate(); }
 
                 // Handle meta-data
                 if (typeof item.topic == 'string') {
