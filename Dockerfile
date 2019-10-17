@@ -1,20 +1,14 @@
 FROM ubuntu:18.04 as builder
 
 RUN apt-get update && apt-get install -y \
-        nginx-extras \
-        lua5.1 \
-        liblua5.1-dev \
+        build-essential \
+        lua5.1 liblua5.1-dev \
         git \
-        diffutils \
         autoconf \
         libssl1.0-dev \
-        make \
-        gettext-base \
         curl \
-        wget \
         nodejs npm \
-    && npm install -g npm grunt \
-    && rm -rf /var/lib/apt/lists/*
+    && npm install -g npm grunt
 
 RUN git clone https://github.com/dersimn/luacrypto /opt/luacrypto \
     && cd /opt/luacrypto \
