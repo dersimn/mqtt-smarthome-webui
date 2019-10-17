@@ -5,6 +5,7 @@
     "feather-icons": "^4.24.1",
     "jquery": "^3.4.1",
     "js-yaml": "^3.13.1",
+    "localforage": "^1.7.3",
     "mqtt-smarthome-connect": "0.0.8",
     "mustache": "^3.1.0",
     "popper.js": "^1.16.0",

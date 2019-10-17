@@ -8,8 +8,8 @@ const esprima = require('esprima');
 const yaml = require('js-yaml');
 const shortid = require('shortid');
 const MqttSmarthome = require('mqtt-smarthome-connect');
+const localforage = require('localforage');
 
-const instanceId = shortid.generate();
 
 // Page Switching
 $(window).on('hashchange',function(){ 
@@ -47,6 +47,10 @@ $(window).scroll(function() {
 
 // Data loading
 (async function() {
+    await localforage.ready();
+    const instanceId = await localforage.getItem('instanceId') || shortid.generate();
+    localforage.setItem('instanceId', instanceId);
+
     const yamlfile = await $.get('data.yaml');
     let data = yaml.load(yamlfile);
     let topics = [];
