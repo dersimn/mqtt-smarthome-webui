@@ -1,3 +1,13 @@
+const $ = require('jquery');
+require('popper.js');
+require('bootstrap');
+
+const Mustache = require('mustache');
+const Paho = require('paho-mqtt');
+const feather = require('feather-icons');
+const esprima = require('esprima');
+const jsyaml = require('js-yaml');
+
 // Page Switching
 $(window).on('hashchange',function(){ 
     gotToPage(location.hash || '#mainpage');
