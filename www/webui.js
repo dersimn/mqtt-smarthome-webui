@@ -6,7 +6,8 @@ const Mustache = require('mustache');
 const Paho = require('paho-mqtt');
 const feather = require('feather-icons');
 const esprima = require('esprima');
-const jsyaml = require('js-yaml');
+const yaml = require('js-yaml');
+const shortid = require('shortid');
 
 // Page Switching
 $(window).on('hashchange',function(){ 
@@ -44,7 +45,7 @@ $(window).scroll(function() {
 
 // Data loading
 $.get('data.yaml', function(yamlfile) {
-    var data = jsyaml.load(yamlfile);
+    var data = yaml.load(yamlfile);
     console.log('Data loaded');
     let topics = [];
 
@@ -58,15 +59,15 @@ $.get('data.yaml', function(yamlfile) {
                 data.pages[i].sections[j].items[k]['itemtype_'+item.type] = true;
 
                 // Type specific changes
-                if (item.type == 'switch') { data.pages[i].sections[j].items[k].switchId = 'switch_'+shortId(); }
+                if (item.type == 'switch') { data.pages[i].sections[j].items[k].switchId = 'switch_'+shortid.generate(); }
                 if (item.type == 'slider') {
-                    data.pages[i].sections[j].items[k].sliderId = 'slider_'+shortId();
+                    data.pages[i].sections[j].items[k].sliderId = 'slider_'+shortid.generate();
                     data.pages[i].sections[j].items[k].sliderMinValue = ('sliderMinValue' in item) ? item.sliderMinValue : 0.0;
                     data.pages[i].sections[j].items[k].sliderMaxValue = ('sliderMaxValue' in item) ? item.sliderMaxValue : 1.0;
                     data.pages[i].sections[j].items[k].sliderStepValue = ('sliderStepValue' in item) ? item.sliderStepValue : 'any';
                 }
-                if (item.type == 'select') { data.pages[i].sections[j].items[k].selectId = 'select_'+shortId(); }
-                if (item.type == 'button') { data.pages[i].sections[j].items[k].buttonId = 'button_'+shortId(); }
+                if (item.type == 'select') { data.pages[i].sections[j].items[k].selectId = 'select_'+shortid.generate(); }
+                if (item.type == 'button') { data.pages[i].sections[j].items[k].buttonId = 'button_'+shortid.generate(); }
 
                 // Handle meta-data
                 if (typeof item.topic == 'string') {
@@ -102,7 +103,7 @@ $.get('data.yaml', function(yamlfile) {
         let ssl = location.protocol == 'https:';
         let mqttUrl = 'ws'+ ((ssl)?'s':'') +'://'+location.hostname+((location.port != '') ? ':' : '')+location.port+'/mqtt';
         console.log('MQTT conenct to', mqttUrl);
-        client = new Paho.Client(mqttUrl, 'webui_'+shortId());
+        client = new Paho.Client(mqttUrl, 'webui_'+shortid.generate());
         client.onMessageArrived = function(recv) {
             let topic = recv.destinationName;
             let message = parsePayload(recv.payloadString);
