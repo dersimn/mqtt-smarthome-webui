@@ -53,7 +53,7 @@ $(window).scroll(function() {
 
     const yamlfile = await $.get('data.yaml');
     let data = yaml.load(yamlfile);
-    let topics = [];
+    let topics = ['time'];
 
     // Preflight data
     for (let [i, page] of Object.entries(data.pages)) {
