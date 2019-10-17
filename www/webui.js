@@ -128,9 +128,10 @@ $.get('data.yaml', function(yamlfile) {
         mqtt.connect();
 
         mqtt.subscribe(topics, (topic, message) => {
-            let val = message;
-            if (typeof message == 'object') {
-                val = message.val;
+            if (message.val) {
+                var val = message.val;
+            } else {
+                var val = message;
             }
 
             console.log(topic, val, message);
