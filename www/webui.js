@@ -45,7 +45,7 @@ $(window).scroll(function() {
 
 // Data loading
 $.get('data.yaml', function(yamlfile) {
-    var data = yaml.load(yamlfile);
+    let data = yaml.load(yamlfile);
     console.log('Data loaded');
     let topics = [];
 
@@ -91,8 +91,8 @@ $.get('data.yaml', function(yamlfile) {
 
     $(function() {
         // Mustache create UI
-        var template = $('#pageTemplate').html();
-        var rendered = Mustache.render(template, data);
+        let template = $('#pageTemplate').html();
+        let rendered = Mustache.render(template, data);
         $('body').append(rendered);
         $(dynamicListGroup);
         feather.replace();
