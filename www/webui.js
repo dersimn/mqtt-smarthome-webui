@@ -87,155 +87,125 @@ $(window).scroll(function() {
         }
     }
 
+    // Mustache create UI
+    let template = $('#pageTemplate').html();
+    let rendered = Mustache.render(template, data);
+    $('body').append(rendered);
+    $(dynamicListGroup);
+    feather.replace();
+    gotToPage(window.location.hash || '#mainpage');
 
-    $(function() {
-        // Mustache create UI
-        let template = $('#pageTemplate').html();
-        let rendered = Mustache.render(template, data);
-        $('body').append(rendered);
-        $(dynamicListGroup);
-        feather.replace();
-        gotToPage(window.location.hash || '#mainpage');
+    // MQTT
+    const ssl = location.protocol == 'https:';
+    const mqttUrl = 'ws'+ ((ssl)?'s':'') +'://'+location.hostname+((location.port != '') ? ':' : '')+location.port+'/mqtt';
+    console.log('MQTT conenct to', mqttUrl);
+    const mqtt = new MqttSmarthome(mqttUrl, {
+        will: {topic: 'webui_'+instanceId+'/maintenance/online', payload: 'false', retain: true},
+        clientId: 'webui_'+instanceId,
+        logger: console
+    });
+    mqtt.on('connect', () => {
+        mqtt.publish('webui_'+instanceId+'/maintenance/online', true, {retain: true});
 
-        // MQTT
-        const ssl = location.protocol == 'https:';
-        const mqttUrl = 'ws'+ ((ssl)?'s':'') +'://'+location.hostname+((location.port != '') ? ':' : '')+location.port+'/mqtt';
-        console.log('MQTT conenct to', mqttUrl);
-        const mqtt = new MqttSmarthome(mqttUrl, {
-            will: {topic: 'webui_'+instanceId+'/maintenance/online', payload: 'false', retain: true},
-            clientId: 'webui_'+instanceId,
-            logger: console
+        // Handle online/offline Button
+        $('[data-mqtt-state]')
+            .removeClass('btn-outline-secondary')
+            .addClass('btn-outline-success')
+            .html(
+                feather.icons['wifi'].toSvg()
+        );
+    });
+    mqtt.on('offline', () => {
+        // Handle online/offline Button
+        $('[data-mqtt-state]')
+            .removeClass('btn-outline-success')
+            .addClass('btn-outline-secondary')
+            .html(
+                feather.icons['wifi-off'].toSvg()
+        );
+    });
+    mqtt.connect();
+
+    mqtt.subscribe(topics, (topic, message) => {
+        if (message.val) {
+            var val = message.val;
+        } else {
+            var val = message;
+        }
+
+        $('[data-mqtt-topic="'+topic+'"]').each(function(i, elem) {
+            let element = $(elem);
+            let meta = element.data('meta');
+            if ('transform' in meta) {
+                if (typeof meta.transform == 'string') {
+                    var valTransformed = Function('topic', 'message', 'value', meta.transform)(topic, message, val);
+                }
+                if (typeof meta.transform == 'object') {
+                    if ('get' in meta.transform) {
+                        var valTransformed = Function('topic', 'message', 'value', meta.transform.get)(topic, message, val);
+                    }
+                }
+            }
+            switch (meta.type) {
+                case 'text':
+                    element.text((valTransformed !== undefined) ? valTransformed : val);
+                    break;
+                case 'switch':
+                    $('#'+meta.switchId).prop('checked', (valTransformed !== undefined) ? valTransformed : val);
+                    break;
+                case 'button':
+                    if (element.data('mqtt-value') == ((valTransformed !== undefined) ? valTransformed : val)) {
+                        element.addClass('active');
+                    } else {
+                        element.removeClass('active');
+                    }
+                    break;
+                case 'slider':
+                    $('#'+meta.sliderId).val((valTransformed !== undefined) ? valTransformed : val);
+                    $('#'+meta.sliderId).data('last-mqtt-value', (valTransformed !== undefined) ? valTransformed : val);
+                    $('#'+meta.sliderId).get(0).style.setProperty("--c",0);
+                    break;
+                case 'select':
+                    $('#'+meta.selectId).val((valTransformed !== undefined) ? valTransformed : val);
+                    $('#'+meta.selectId).data('last-mqtt-value', (valTransformed !== undefined) ? valTransformed : val);
+                    $('#'+meta.selectId+'_loader').removeClass('loader');
+                    break;
+            }
         });
-        mqtt.on('connect', () => {
-            mqtt.publish('webui_'+instanceId+'/maintenance/online', true, {retain: true});
+    });
 
-            // Handle online/offline Button
-            $('[data-mqtt-state]')
-                .removeClass('btn-outline-secondary')
-                .addClass('btn-outline-success')
-                .html(
-                    feather.icons['wifi'].toSvg()
-            );
-        });
-        mqtt.on('offline', () => {
-            // Handle online/offline Button
-            $('[data-mqtt-state]')
-                .removeClass('btn-outline-success')
-                .addClass('btn-outline-secondary')
-                .html(
-                    feather.icons['wifi-off'].toSvg()
-            );
-        });
-        mqtt.connect();
+    // Assign user-action events
+    $("[id^=switch]").each(function(i, elem) {
+        $(elem).click(function() {
+            let element = $(elem);
+            let meta = element.data('meta');
+            let topic = meta.topic.set;
+            if (topic == null) return false;
 
-        mqtt.subscribe(topics, (topic, message) => {
-            if (message.val) {
-                var val = message.val;
-            } else {
-                var val = message;
+            let input = $(this).prop('checked');
+            if ('transform' in meta) {
+                if (typeof meta.transform == 'object') {
+                    if ('set' in meta.transform) {
+                        var inputTransformed = Function('input', meta.transform.set)(input);
+                    }
+                }
             }
 
-            $('[data-mqtt-topic="'+topic+'"]').each(function(i, elem) {
-                let element = $(elem);
-                let meta = element.data('meta');
-                if ('transform' in meta) {
-                    if (typeof meta.transform == 'string') {
-                        var valTransformed = Function('topic', 'message', 'value', meta.transform)(topic, message, val);
-                    }
-                    if (typeof meta.transform == 'object') {
-                        if ('get' in meta.transform) {
-                            var valTransformed = Function('topic', 'message', 'value', meta.transform.get)(topic, message, val);
-                        }
-                    }
-                }
-                switch (meta.type) {
-                    case 'text':
-                        element.text((valTransformed !== undefined) ? valTransformed : val);
-                        break;
-                    case 'switch':
-                        $('#'+meta.switchId).prop('checked', (valTransformed !== undefined) ? valTransformed : val);
-                        break;
-                    case 'button':
-                        if (element.data('mqtt-value') == ((valTransformed !== undefined) ? valTransformed : val)) {
-                            element.addClass('active');
-                        } else {
-                            element.removeClass('active');
-                        }
-                        break;
-                    case 'slider':
-                        $('#'+meta.sliderId).val((valTransformed !== undefined) ? valTransformed : val);
-                        $('#'+meta.sliderId).data('last-mqtt-value', (valTransformed !== undefined) ? valTransformed : val);
-                        $('#'+meta.sliderId).get(0).style.setProperty("--c",0);
-                        break;
-                    case 'select':
-                        $('#'+meta.selectId).val((valTransformed !== undefined) ? valTransformed : val);
-                        $('#'+meta.selectId).data('last-mqtt-value', (valTransformed !== undefined) ? valTransformed : val);
-                        $('#'+meta.selectId+'_loader').removeClass('loader');
-                        break;
-                }
-            });
+            let message = String((inputTransformed !== undefined) ? inputTransformed : input);
+
+            mqtt.publish(topic, message);
+            return false;
         });
+    });
 
-        // Assign user-action events
-        $("[id^=switch]").each(function(i, elem) {
-            $(elem).click(function() {
-                let element = $(elem);
-                let meta = element.data('meta');
-                let topic = meta.topic.set;
-                if (topic == null) return false;
-
-                let input = $(this).prop('checked');
-                if ('transform' in meta) {
-                    if (typeof meta.transform == 'object') {
-                        if ('set' in meta.transform) {
-                            var inputTransformed = Function('input', meta.transform.set)(input);
-                        }
-                    }
-                }
-
-                let message = String((inputTransformed !== undefined) ? inputTransformed : input);
-
-                mqtt.publish(topic, message);
-                return false;
-            });
-        });
-
-        $('[id^=button]').each(function(i, elem) {
-            $(elem).click(function() {
-                let element = $(elem);
-                let meta = element.data('meta');
-                let topic = meta.topic.set;
-                if (topic == null) return;
-
-                let input = element.data('mqtt-value');
-                if ('transform' in meta) {
-                    if (typeof meta.transform == 'object') {
-                        if ('set' in meta.transform) {
-                            var inputTransformed = Function('input', meta.transform.set)(input);
-                        }
-                    }
-                }
-
-                let message = String((inputTransformed !== undefined) ? inputTransformed : input);
-
-                mqtt.publish(topic, message);
-            });
-        });
-
-        $('[id^=slider]').on('input', function() {
-            $(this).get(0).style.setProperty("--c",
-                ($(this).data('last-mqtt-value') - $(this).val()) /
-                ($(this).attr('max')-$(this).attr('min')) *
-                ($(this).width() - 20) +'px' /*width of wrapper - width of thumb*/
-            );
-        });
-        $('[id^=slider]').on('change', function() {
-            let element = $(this);
+    $('[id^=button]').each(function(i, elem) {
+        $(elem).click(function() {
+            let element = $(elem);
             let meta = element.data('meta');
             let topic = meta.topic.set;
             if (topic == null) return;
 
-            let input = element.val();
+            let input = element.data('mqtt-value');
             if ('transform' in meta) {
                 if (typeof meta.transform == 'object') {
                     if ('set' in meta.transform) {
@@ -248,27 +218,54 @@ $(window).scroll(function() {
 
             mqtt.publish(topic, message);
         });
+    });
 
-        $('[id^=select]').on('change', function() {
-            let meta = $(this).data('meta');
-            let topic = meta.topic.set;
-            if (topic == null) return;
+    $('[id^=slider]').on('input', function() {
+        $(this).get(0).style.setProperty("--c",
+            ($(this).data('last-mqtt-value') - $(this).val()) /
+            ($(this).attr('max')-$(this).attr('min')) *
+            ($(this).width() - 20) +'px' /*width of wrapper - width of thumb*/
+        );
+    });
+    $('[id^=slider]').on('change', function() {
+        let element = $(this);
+        let meta = element.data('meta');
+        let topic = meta.topic.set;
+        if (topic == null) return;
 
-            let input = $(this).val();
-            if ('transform' in meta) {
-                if (typeof meta.transform == 'object') {
-                    if ('set' in meta.transform) {
-                        var inputTransformed = Function('input', meta.transform.set)(input);
-                    }
+        let input = element.val();
+        if ('transform' in meta) {
+            if (typeof meta.transform == 'object') {
+                if ('set' in meta.transform) {
+                    var inputTransformed = Function('input', meta.transform.set)(input);
                 }
             }
+        }
 
-            let message = String((inputTransformed !== undefined) ? inputTransformed : input);
+        let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
-            mqtt.publish(topic, message);
+        mqtt.publish(topic, message);
+    });
 
-            $(this).val($(this).data('last-mqtt-value')); // Reset to last known state
-            $('#'+$(this).attr('id')+'_loader').addClass('loader'); // Show loader
-        });
+    $('[id^=select]').on('change', function() {
+        let meta = $(this).data('meta');
+        let topic = meta.topic.set;
+        if (topic == null) return;
+
+        let input = $(this).val();
+        if ('transform' in meta) {
+            if (typeof meta.transform == 'object') {
+                if ('set' in meta.transform) {
+                    var inputTransformed = Function('input', meta.transform.set)(input);
+                }
+            }
+        }
+
+        let message = String((inputTransformed !== undefined) ? inputTransformed : input);
+
+        mqtt.publish(topic, message);
+
+        $(this).val($(this).data('last-mqtt-value')); // Reset to last known state
+        $('#'+$(this).attr('id')+'_loader').addClass('loader'); // Show loader
     });
 })();
