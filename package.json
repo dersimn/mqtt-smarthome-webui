@@ -1,4 +1,13 @@
 {
+  "name": "mqtt-smarthome-webui",
+  "version": "1.0.0",
+  "private": true,
+  "authors": [
+    "Simon Christmann <simon@christmann.email> (https://github.com/dersimn)"
+  ],
+  "license": "MIT",
+  "homepage": "https://hub.docker.com/r/dersimn/mqtt-smarthome-webui",
+  "repository": "github:dersimn/mqtt-smarthome-webui",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "esprima": "^4.0.1",
