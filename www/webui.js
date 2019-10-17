@@ -46,9 +46,9 @@ $(window).scroll(function() {
 });
 
 // Data loading
-$.get('data.yaml', function(yamlfile) {
+(async function() {
+    const yamlfile = await $.get('data.yaml');
     let data = yaml.load(yamlfile);
-    console.log('Data loaded');
     let topics = [];
 
     // Preflight data
@@ -271,4 +271,4 @@ $.get('data.yaml', function(yamlfile) {
             $('#'+$(this).attr('id')+'_loader').addClass('loader'); // Show loader
         });
     });
-});
+})();
