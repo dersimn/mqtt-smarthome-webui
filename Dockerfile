@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
         gettext-base \
         curl \
         wget \
+        nodejs npm \
+    && npm install -g npm grunt \
     && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/dersimn/luacrypto /opt/luacrypto \
@@ -21,6 +23,13 @@ RUN git clone https://github.com/dersimn/luacrypto /opt/luacrypto \
     && make
 
 RUN curl -sSL -o /mo https://git.io/get-mo && chmod a+x /mo
+
+COPY package.json /app/package.json
+COPY Gruntfile.js /app/Gruntfile.js
+
+RUN cd /app \
+    && npm install \
+    && grunt
 
 
 FROM ubuntu:18.04
@@ -37,6 +46,8 @@ COPY --from=builder /mo /usr/local/bin/mo
 COPY www /www
 COPY nginx.template /nginx.template
 COPY run.bash /run.bash
+COPY --from=builder /app/www/bundle.js /www/bundle.js
+COPY --from=builder /app/www/bundle.css /www/bundle.css
 
 EXPOSE 80
 EXPOSE 443
