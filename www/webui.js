@@ -3,12 +3,14 @@ require('popper.js');
 require('bootstrap');
 
 const Mustache = require('mustache');
-const Paho = require('paho-mqtt');
 const feather = require('feather-icons');
 const esprima = require('esprima');
 const yaml = require('js-yaml');
 const shortid = require('shortid');
 shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+const MqttSmarthome = require('mqtt-smarthome-connect');
+
+const instanceId = shortid.generate();
 
 // Page Switching
 $(window).on('hashchange',function(){ 
@@ -98,14 +100,36 @@ $.get('data.yaml', function(yamlfile) {
         gotToPage(window.location.hash || '#mainpage');
 
         // MQTT
-        console.log(location.port);
-        let ssl = location.protocol == 'https:';
-        let mqttUrl = 'ws'+ ((ssl)?'s':'') +'://'+location.hostname+((location.port != '') ? ':' : '')+location.port+'/mqtt';
+        const ssl = location.protocol == 'https:';
+        const mqttUrl = 'ws'+ ((ssl)?'s':'') +'://'+location.hostname+((location.port != '') ? ':' : '')+location.port+'/mqtt';
         console.log('MQTT conenct to', mqttUrl);
-        client = new Paho.Client(mqttUrl, 'webui_'+shortid.generate());
-        client.onMessageArrived = function(recv) {
-            let topic = recv.destinationName;
-            let message = parsePayload(recv.payloadString);
+        const mqtt = new MqttSmarthome(mqttUrl, {
+            will: {topic: 'webui_'+instanceId+'/maintenance/online', payload: 'false', retain: true},
+            clientId: 'webui_'+instanceId
+        });
+        mqtt.on('connect', () => {
+            mqtt.publish('webui_'+instanceId+'/maintenance/online', true, {retain: true});
+
+            // Handle online/offline Button
+            $('[data-mqtt-state]')
+                .removeClass('btn-outline-secondary')
+                .addClass('btn-outline-success')
+                .html(
+                    feather.icons['wifi'].toSvg()
+            );
+        });
+        mqtt.on('offline', () => {
+            // Handle online/offline Button
+            $('[data-mqtt-state]')
+                .removeClass('btn-outline-success')
+                .addClass('btn-outline-secondary')
+                .html(
+                    feather.icons['wifi-off'].toSvg()
+            );
+        });
+        mqtt.connect();
+
+        mqtt.subscribe(topics, (topic, message) => {
             let val = message;
             if (typeof message == 'object') {
                 val = message.val;
@@ -152,41 +176,6 @@ $.get('data.yaml', function(yamlfile) {
                         break;
                 }
             });
-        };
-
-        // Handle connect / disconnect
-        client.onConnectionLost = function() {
-            // Handle online/offline Button
-            $('[data-mqtt-state]')
-                .removeClass('btn-outline-success')
-                .addClass('btn-outline-secondary')
-                .html(
-                    feather.icons['wifi-off'].toSvg()
-            );
-
-            setTimeout(client.connect, 500);
-        };
-
-        client.onConnected = function(reconnect) {
-            // Handle online/offline Button
-            $('[data-mqtt-state]')
-                .removeClass('btn-outline-secondary')
-                .addClass('btn-outline-success')
-                .html(
-                    feather.icons['wifi'].toSvg()
-            );
-
-            // Subscribe
-            $.each(topics, function(i, topic) {
-                client.subscribe(topic);
-            });
-        };
-        client.connect();
-
-        $(window).focus(function() {
-            if (!client.isConnected()) {
-                setTimeout(client.connect, 500);
-            }
         });
 
         // Assign user-action events
@@ -209,7 +198,7 @@ $.get('data.yaml', function(yamlfile) {
                 let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
                 console.log(topic, message);
-                client.send(topic, message);
+                mqtt.publish(topic, message);
                 return false;
             });
         });
@@ -233,7 +222,7 @@ $.get('data.yaml', function(yamlfile) {
                 let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
                 console.log(topic, message);
-                client.send(topic, message);
+                mqtt.publish(topic, message);
             });
         });
 
@@ -262,7 +251,7 @@ $.get('data.yaml', function(yamlfile) {
             let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
             console.log(topic, message);
-            client.send(topic, message);
+            mqtt.publish(topic, message);
         });
 
         $('[id^=select]').on('change', function() {
@@ -282,7 +271,7 @@ $.get('data.yaml', function(yamlfile) {
             let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
             console.log(topic, message);
-            client.send(topic, message);
+            mqtt.publish(topic, message);
 
             $(this).val($(this).data('last-mqtt-value')); // Reset to last known state
             $('#'+$(this).attr('id')+'_loader').addClass('loader'); // Show loader
