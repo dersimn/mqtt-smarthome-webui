@@ -7,7 +7,6 @@ const feather = require('feather-icons');
 const esprima = require('esprima');
 const yaml = require('js-yaml');
 const shortid = require('shortid');
-shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 const MqttSmarthome = require('mqtt-smarthome-connect');
 
 const instanceId = shortid.generate();
