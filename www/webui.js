@@ -103,7 +103,8 @@ $.get('data.yaml', function(yamlfile) {
         console.log('MQTT conenct to', mqttUrl);
         const mqtt = new MqttSmarthome(mqttUrl, {
             will: {topic: 'webui_'+instanceId+'/maintenance/online', payload: 'false', retain: true},
-            clientId: 'webui_'+instanceId
+            clientId: 'webui_'+instanceId,
+            logger: console
         });
         mqtt.on('connect', () => {
             mqtt.publish('webui_'+instanceId+'/maintenance/online', true, {retain: true});
@@ -133,8 +134,6 @@ $.get('data.yaml', function(yamlfile) {
             } else {
                 var val = message;
             }
-
-            console.log(topic, val, message);
 
             $('[data-mqtt-topic="'+topic+'"]').each(function(i, elem) {
                 let element = $(elem);
@@ -196,7 +195,6 @@ $.get('data.yaml', function(yamlfile) {
 
                 let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
-                console.log(topic, message);
                 mqtt.publish(topic, message);
                 return false;
             });
@@ -220,7 +218,6 @@ $.get('data.yaml', function(yamlfile) {
 
                 let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
-                console.log(topic, message);
                 mqtt.publish(topic, message);
             });
         });
@@ -249,7 +246,6 @@ $.get('data.yaml', function(yamlfile) {
 
             let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
-            console.log(topic, message);
             mqtt.publish(topic, message);
         });
 
@@ -269,7 +265,6 @@ $.get('data.yaml', function(yamlfile) {
 
             let message = String((inputTransformed !== undefined) ? inputTransformed : input);
 
-            console.log(topic, message);
             mqtt.publish(topic, message);
 
             $(this).val($(this).data('last-mqtt-value')); // Reset to last known state
