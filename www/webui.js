@@ -63,7 +63,6 @@ $.get('data.yaml', function(yamlfile) {
                 // Type specific changes
                 data.pages[i].sections[j].items[k][item.type+'Id'] = item.type + '_' + shortid.generate();
                 if (item.type == 'slider') {
-                    data.pages[i].sections[j].items[k].sliderId = 'slider_'+shortid.generate();
                     data.pages[i].sections[j].items[k].sliderMinValue = ('sliderMinValue' in item) ? item.sliderMinValue : 0.0;
                     data.pages[i].sections[j].items[k].sliderMaxValue = ('sliderMaxValue' in item) ? item.sliderMaxValue : 1.0;
                     data.pages[i].sections[j].items[k].sliderStepValue = ('sliderStepValue' in item) ? item.sliderStepValue : 'any';
