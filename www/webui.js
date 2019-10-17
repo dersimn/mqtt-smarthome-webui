@@ -52,11 +52,11 @@ $.get('data.yaml', function(yamlfile) {
     let topics = [];
 
     // Preflight data
-    $.each(data.pages, function(i, page) {
+    for (let [i, page] of Object.entries(data.pages)) {
         if (page.pageid == 'mainpage') { data.pages[i].mainpage = true; }
 
-        $.each(page.sections, function(j, section) {
-            $.each(section.items, function(k, item) {
+        for (let [j, section] of Object.entries(page.sections)) {
+            for (let [k, item] of Object.entries(section.items)) {
                 // Create boolean values for Mustache
                 data.pages[i].sections[j].items[k]['itemtype_'+item.type] = true;
 
@@ -84,9 +84,9 @@ $.get('data.yaml', function(yamlfile) {
                 data.pages[i].sections[j].items[k].meta = JSON.stringify(item);
 
                 if ('topic' in item) { topics.push(item.topic.get); }
-            });
-        });
-    });
+            }
+        }
+    }
 
 
     $(function() {
