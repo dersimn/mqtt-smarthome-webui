@@ -8,6 +8,7 @@ const feather = require('feather-icons');
 const esprima = require('esprima');
 const yaml = require('js-yaml');
 const shortid = require('shortid');
+shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
 // Page Switching
 $(window).on('hashchange',function(){ 
