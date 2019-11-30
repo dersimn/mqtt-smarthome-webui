@@ -101,7 +101,7 @@ $(window).scroll(function() {
 
     // MQTT
     const ssl = location.protocol == 'https:';
-    const mqttUrl = 'ws'+ ((ssl)?'s':'') +'://'+location.hostname+((location.port != '') ? ':' : '')+location.port+'/mqtt';
+    const mqttUrl = 'ws'+ ((ssl)?'s':'') +'://'+location.hostname+((location.port != '') ? ':'+location.port : '')+'/mqtt';
     console.log('MQTT conenct to', mqttUrl);
     const mqtt = new MqttSmarthome(mqttUrl, {
         will: {topic: 'webui_'+instanceId+'/maintenance/online', payload: 'false', retain: true},
@@ -131,15 +131,11 @@ $(window).scroll(function() {
     mqtt.connect();
 
     mqtt.subscribe(topics, (topic, message) => {
-        if (typeof message === 'object' && 'val' in message) {
-            var val = message.val;
-        } else {
-            var val = message;
-        }
+        const val = (typeof message === 'object' && 'val' in message) ? message.val : message;
 
         $('[data-mqtt-topic="'+topic+'"]').each(function(i, elem) {
-            let element = $(elem);
-            let meta = element.data('meta');
+            const element = $(elem);
+            const meta = element.data('meta');
             if ('transform' in meta) {
                 if (typeof meta.transform == 'string') {
                     var valTransformed = Function('topic', 'message', 'value', meta.transform)(topic, message, val);
@@ -150,28 +146,30 @@ $(window).scroll(function() {
                     }
                 }
             }
+            const usedValue = (valTransformed !== undefined) ? valTransformed : val;
+
             switch (meta.type) {
                 case 'text':
-                    element.text((valTransformed !== undefined) ? valTransformed : val);
+                    element.text();
                     break;
                 case 'switch':
-                    $('#'+meta.switchId).prop('checked', (valTransformed !== undefined) ? valTransformed : val);
+                    $('#'+meta.switchId).prop('checked', usedValue);
                     break;
                 case 'button':
-                    if (element.data('mqtt-value') == ((valTransformed !== undefined) ? valTransformed : val)) {
+                    if (element.data('mqtt-value') == (usedValue)) {
                         element.addClass('active');
                     } else {
                         element.removeClass('active');
                     }
                     break;
                 case 'slider':
-                    $('#'+meta.sliderId).val((valTransformed !== undefined) ? valTransformed : val);
-                    $('#'+meta.sliderId).data('last-mqtt-value', (valTransformed !== undefined) ? valTransformed : val);
+                    $('#'+meta.sliderId).val(usedValue);
+                    $('#'+meta.sliderId).data('last-mqtt-value', usedValue);
                     $('#'+meta.sliderId).get(0).style.setProperty("--c",0);
                     break;
                 case 'select':
-                    $('#'+meta.selectId).val((valTransformed !== undefined) ? valTransformed : val);
-                    $('#'+meta.selectId).data('last-mqtt-value', (valTransformed !== undefined) ? valTransformed : val);
+                    $('#'+meta.selectId).val(usedValue);
+                    $('#'+meta.selectId).data('last-mqtt-value', usedValue);
                     $('#'+meta.selectId+'_loader').removeClass('loader');
                     break;
             }
