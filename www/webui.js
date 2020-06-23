@@ -56,7 +56,7 @@ $(window).scroll(function() {
     const cookieResponse = await $.get('/cookie', {instanceId: instanceId});
 
     // Get content file
-    const yamlfile = await $.get('data.yaml');
+    const yamlfile = await $.get({url: 'data.yaml', cache: false});
     let data = yaml.load(yamlfile);
     let topics = ['time'];
 
