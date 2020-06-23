@@ -53,7 +53,11 @@ $(window).scroll(function() {
     localforage.setItem('instanceId', instanceId);
 
     // Request Cookie for Websocket SSL workaround
-    const cookieResponse = await $.get('/cookie', {instanceId: instanceId});
+    try {
+        await $.get('/cookie', {instanceId: instanceId});
+    } catch (e) {
+        // nothing
+    }
 
     // Get content file
     const yamlfile = await $.get({url: 'data.yaml', cache: false});
