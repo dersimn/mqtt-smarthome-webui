@@ -5,13 +5,13 @@ CONFIG_PATH="/etc/nginx/nginx.conf"
 
 # Get settings
 if [ -f /ssl/nginx.key ] && [ -f /ssl/nginx.crt ]; then
-	export ENABLE_HTTPS=1
+	export ENABLE_HTTPS=true
 fi
 if [ -f /ssl/client.crt ]; then
-	export SSL_CLIENT_AUTH=1
+	export SSL_CLIENT_AUTH=true
 fi
 if [ -f /ssl/client.crl ]; then
-	export SSL_CLIENT_AUTH_CRL=1
+	export SSL_CLIENT_AUTH_CRL=true
 fi
 if [[ -z "${HTTPS_REDIRECT_PORT}" ]]; then
 	HTTPS_REDIRECT_PORT=""
@@ -19,7 +19,7 @@ else
 	HTTPS_REDIRECT_PORT=":${HTTPS_REDIRECT_PORT}"
 fi
 if [ -f /nginx.log ]; then
-    export ACCESS_LOG_FILE=1
+    export ACCESS_LOG_FILE=true
 fi
 
 # Build Config
