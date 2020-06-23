@@ -40,8 +40,26 @@ http {
     # Logging Settings
     ##
 
+    log_format logfmt   'request_uri="$request_uri" '
+                        'request_method="$request_method" '
+                        'status="$status" '
+                        'remote_addr="$remote_addr" '
+                        'http_referer="$http_referer" '
+                        'http_user_agent="$http_user_agent" '
+                        'server_protocol="$server_protocol" '
+                        'ssl_client_verify="$ssl_client_verify" '
+                        'request_length="$request_length" '
+                        'bytes_sent="$bytes_sent" '
+                        'cookie_AccessToken="$cookie_AccessToken" '
+                        'cookie_ClientId="$cookie_ClientId" '
+                        'cookie_AccessExpires="$cookie_AccessExpires" ';
+
     access_log /dev/stdout;
     error_log /dev/stderr info;
+
+    {{#ACCESS_LOG_FILE}}
+        access_log /nginx.log logfmt;
+    {{/ACCESS_LOG_FILE}}
 
     ##
     # Gzip Settings

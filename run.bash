@@ -18,6 +18,9 @@ if [[ -z "${HTTPS_REDIRECT_PORT}" ]]; then
 else
 	HTTPS_REDIRECT_PORT=":${HTTPS_REDIRECT_PORT}"
 fi
+if [ -f /nginx.log ]; then
+    export ACCESS_LOG_FILE=1
+fi
 
 # Build Config
 cat /nginx.template | mo > ${CONFIG_PATH}
