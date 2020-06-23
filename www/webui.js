@@ -109,12 +109,12 @@ $(window).scroll(function() {
     const mqttUrl = 'ws'+ ((ssl)?'s':'') +'://'+location.hostname+((location.port != '') ? ':'+location.port : '')+'/mqtt';
     console.log('MQTT conenct to', mqttUrl);
     const mqtt = new MqttSmarthome(mqttUrl, {
-        will: {topic: 'webui_'+instanceId+'/maintenance/online', payload: 'false', retain: true},
+        will: {topic: 'webui/maintenance/'+instanceId+'/online', payload: 'false', retain: true},
         clientId: 'webui_'+instanceId,
         logger: console
     });
     mqtt.on('connect', () => {
-        mqtt.publish('webui_'+instanceId+'/maintenance/online', true, {retain: true});
+        mqtt.publish('webui/maintenance/'+instanceId+'/online', true, {retain: true});
 
         // Handle online/offline Button
         $('[data-mqtt-state]')
