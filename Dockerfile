@@ -1,3 +1,16 @@
+FROM node as jsbuilder
+
+RUN npm install -g grunt
+
+COPY package.json /app/package.json
+COPY Gruntfile.js /app/Gruntfile.js
+
+WORKDIR /app
+
+RUN npm install \
+    && grunt
+
+
 FROM ubuntu:18.04 as builder
 
 RUN apt-get update && apt-get install -y \
@@ -6,9 +19,7 @@ RUN apt-get update && apt-get install -y \
         git \
         autoconf \
         libssl1.0-dev \
-        curl \
-        nodejs npm \
-    && npm install -g npm grunt
+        curl
 
 RUN git clone https://github.com/dersimn/luacrypto /opt/luacrypto \
     && cd /opt/luacrypto \
@@ -17,13 +28,6 @@ RUN git clone https://github.com/dersimn/luacrypto /opt/luacrypto \
     && make
 
 RUN curl -sSL -o /mo https://git.io/get-mo && chmod a+x /mo
-
-COPY package.json /app/package.json
-COPY Gruntfile.js /app/Gruntfile.js
-
-RUN cd /app \
-    && npm install \
-    && grunt
 
 
 FROM ubuntu:18.04
@@ -40,8 +44,8 @@ COPY --from=builder /mo /usr/local/bin/mo
 COPY www /www
 COPY nginx.template /nginx.template
 COPY run.bash /run.bash
-COPY --from=builder /app/www/bundle.js /www/bundle.js
-COPY --from=builder /app/www/bundle.css /www/bundle.css
+COPY --from=jsbuilder /app/www/bundle.js /www/bundle.js
+COPY --from=jsbuilder /app/www/bundle.css /www/bundle.css
 
 EXPOSE 80
 EXPOSE 443

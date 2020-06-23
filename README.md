@@ -65,6 +65,13 @@ For a simple simulation environment consider also running
 
 in background.
 
+### Build
+
+    docker buildx create --name mybuilder --use
+    docker buildx inspect --bootstrap
+    
+    docker buildx build --platform linux/amd64,linux/arm/v7 -t dersimn/mqtt-smarthome-webui -t dersimn/mqtt-smarthome-webui:1.x.0 --push .
+
 ## Credits
 
 This project follows [Oliver "owagner" Wagner](https://github.com/owagner)'s architectural proposal for an [mqtt-smarthome](https://github.com/mqtt-smarthome/mqtt-smarthome). Set of [basic icons](https://dribbble.com/shots/2084609-Smart-House-Icon-Set-Free) freely provided by [Roman "Minsk" Malashov](https://dribbble.com/Miart).
