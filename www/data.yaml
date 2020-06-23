@@ -133,7 +133,7 @@ pages:
       link: "#testpage"
     - type: html
       html: >
-        <link href="http://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
         <div class="list-group-item">
           <span style="font-family: Great Vibes;">Hello World!</span>
         </div>
@@ -174,7 +174,7 @@ pages:
       topic: var//contacts/count
     - type: html
       html: >
-        <link href="http://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
         <div class="list-group-item">
           <span style="font-family: Great Vibes;">Hello World!</span>
         </div>
