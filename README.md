@@ -13,6 +13,8 @@ You have to enable Websockets on your broker. The Docker Image [toke/mosquitto](
         -p 80:80 \
         dersimn/mqtt-smarthome-webui
 
+### SSL / HTTPS
+
 If you provide an SSL key/cert pair in `/ssl`, the Docker Image will also enable HTTPS:
 
 * `/ssl/nginx.key`
@@ -34,9 +36,15 @@ A nice tutorial on how to generate your own certificates, is located [here](http
         -p 443:443 \
         dersimn/mqtt-smarthome-webui
 
+HTTPS and client-auth are optional for clients connecting via a local IP, according to [these](https://github.com/dersimn/mqtt-smarthome-webui/blob/6e419811d3bd433e5fc594e1beccaa0499fe08cf/nginx.template#L69) IP ranges. If you make port 80/443 public to the Internet you should definitely enable client-auth.
+
+### Non-default ports
+
 If you want to change the default ports, specify it like this: `-p 8001:80 -p 8443:443 -e "HTTPS_REDIRECT_PORT=8443"`.
 
-HTTPS and client-auth are optional for clients connecting via a local IP, according to [these](https://github.com/dersimn/mqtt-smarthome-webui/blob/6e419811d3bd433e5fc594e1beccaa0499fe08cf/nginx.template#L69) IP ranges. If you make port 80/443 public to the Internet you should definitely enable client-auth.
+### Detailed access log
+
+If you provide the file `/nginx.log`, nginx will enable a more detailed access log. This file can be a regular file or a FIFO, to further process the logged data with e.g. Telegraf.
 
 ## Development
 
