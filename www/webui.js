@@ -47,10 +47,15 @@ $(window).scroll(function() {
 
 // Data loading
 (async function() {
+    // Get saved instanceId from local storage, or generate new
     await localforage.ready();
     const instanceId = await localforage.getItem('instanceId') || shortid.generate();
     localforage.setItem('instanceId', instanceId);
 
+    // Request Cookie for Websocket SSL workaround
+    const cookieResponse = await $.get('/cookie', {instanceId: instanceId});
+
+    // Get content file
     const yamlfile = await $.get('data.yaml');
     let data = yaml.load(yamlfile);
     let topics = ['time'];

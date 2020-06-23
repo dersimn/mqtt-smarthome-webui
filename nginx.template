@@ -148,6 +148,14 @@ http {
                 if ($access_allowed = no) {
                     return 403;
                 }
+            {{/SSL_CLIENT_AUTH}}
+        }
+
+        location /cookie {
+            {{#SSL_CLIENT_AUTH}}
+                if ($access_allowed = no) {
+                    return 403;
+                }
 
                 # Workaround for iOS devices - Part 1
                 # Websockets are not authenticated via Client-Certs in iOS
@@ -169,6 +177,8 @@ http {
                             string.format("ClientId=%s; path=/", client),
                             string.format("AccessExpires=%d; path=/", expires)
                           }
+
+                          ngx.exit(ngx.HTTP_NO_CONTENT)
                         end
                     }
                 }
