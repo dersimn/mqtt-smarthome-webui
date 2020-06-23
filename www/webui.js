@@ -171,7 +171,7 @@ $(window).scroll(function() {
 
             switch (meta.type) {
                 case 'text':
-                    element.text();
+                    element.text(usedValue);
                     break;
                 case 'switch':
                     $('#'+meta.switchId).prop('checked', usedValue);
