@@ -116,6 +116,18 @@ $(window).scroll(function() {
     mqtt.on('connect', () => {
         mqtt.publish('webui/maintenance/'+instanceId+'/online', true, {retain: true});
 
+        // Publish device info if available
+        try {
+            mqtt.publish('webui/maintenance/'+instanceId+'/deviceInfo', {
+                val: FRUBIL.status.value != 0,
+                client: FRUBIL.client,
+                device: FRUBIL.device,
+                ts: Date.now()
+            }, {retain: true});
+        } catch (e) {
+            mqtt.publish('webui/maintenance/'+instanceId+'/deviceInfo', {val: false});
+        }
+
         // Handle online/offline Button
         $('[data-mqtt-state]')
             .removeClass('btn-outline-secondary')
