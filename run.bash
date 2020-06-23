@@ -23,6 +23,7 @@ if [ -f /nginx.log ]; then
 fi
 
 # Build Config
+export MO_FALSE_IS_EMPTY=true
 cat /nginx.template | mo > ${CONFIG_PATH}
 
 # Run

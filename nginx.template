@@ -85,9 +85,11 @@ http {
 
     geo $internal_ip {
         default         no;
-        10.0.0.0/8      yes;
-        #172.16.0.0/12  yes;
-        192.168.0.0/16  yes;
+        {{#WHITELIST_LOCAL_IP}}
+            10.0.0.0/8      yes;
+            172.16.0.0/12   yes;
+            192.168.0.0/16  yes;
+        {{/WHITELIST_LOCAL_IP}}
     }
 
     map $internal_ip$ssl_client_verify $access_allowed {

@@ -36,7 +36,7 @@ A nice tutorial on how to generate your own certificates, is located [here](http
         -p 443:443 \
         dersimn/mqtt-smarthome-webui
 
-HTTPS and client-auth are optional for clients connecting via a local IP, according to [these](https://github.com/dersimn/mqtt-smarthome-webui/blob/6e419811d3bd433e5fc594e1beccaa0499fe08cf/nginx.template#L69) IP ranges. If you make port 80/443 public to the Internet you should definitely enable client-auth.
+HTTPS and client-auth are optional for clients connecting from a local IP, according to [these](https://github.com/dersimn/mqtt-smarthome-webui/blob/master/nginx.template#L89) IP ranges. If you don't want this behaviour, set `-e WHITELIST_LOCAL_IP=false` to force SSL and client-auth for everyone.
 
 ### Non-default ports
 

@@ -46,4 +46,6 @@ COPY --from=builder /app/www/bundle.css /www/bundle.css
 EXPOSE 80
 EXPOSE 443
 
+ENV WHITELIST_LOCAL_IP true
+
 CMD ["bash", "/run.bash"]
