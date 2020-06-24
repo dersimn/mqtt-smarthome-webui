@@ -170,9 +170,9 @@ http {
                                 string.format("ClientId=%s; path=/", client),
                                 string.format("AccessExpires=%d; path=/", expires)
                             }
-
-                            ngx.exit(ngx.HTTP_NO_CONTENT)
                         end
+
+                        ngx.exit(ngx.HTTP_NO_CONTENT)
                     }
                 }
             {{/SSL_CLIENT_AUTH}}
