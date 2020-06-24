@@ -10,6 +10,8 @@ const shortid = require('shortid');
 const MqttSmarthome = require('mqtt-smarthome-connect');
 const localforage = require('localforage');
 
+const ssl = location.protocol == 'https:';
+
 
 // Page Switching
 $(window).on('hashchange',function(){ 
@@ -53,10 +55,13 @@ $(window).scroll(function() {
     localforage.setItem('instanceId', instanceId);
 
     // Request Cookie for Websocket SSL workaround
-    try {
-        await $.get('/cookie', {instanceId: instanceId});
-    } catch (e) {
-        // nothing
+    if (ssl) {
+        try {
+            await $.get('/cookie', {instanceId: instanceId});
+        } catch (e) {
+            // could not collect auth cookies
+            // workaround for Safari with SSL client auth might not working
+        }
     }
 
     // Get content file
@@ -109,7 +114,6 @@ $(window).scroll(function() {
     gotToPage(window.location.hash || '#mainpage');
 
     // MQTT
-    const ssl = location.protocol == 'https:';
     const mqttUrl = 'ws'+ ((ssl)?'s':'') +'://'+location.hostname+((location.port != '') ? ':'+location.port : '')+'/mqtt';
     console.log('MQTT conenct to', mqttUrl);
     const mqtt = new MqttSmarthome(mqttUrl, {
