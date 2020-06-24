@@ -169,16 +169,16 @@ http {
                         local crypto = require "crypto"
 
                         if ngx.var.ssl_client_verify == "SUCCESS" then
-                          client = crypto.digest("sha256", ngx.var.ssl_client_cert)
-                          expires = ngx.time() + 3600
+                            client = crypto.digest("sha256", ngx.var.ssl_client_cert)
+                            expires = ngx.time() + 3600
 
-                          ngx.header["Set-Cookie"] = {
-                            string.format("AccessToken=%s; path=/", crypto.hmac.digest("sha256", string.format("%s%d", client, expires), HMAC_SECRET)),
-                            string.format("ClientId=%s; path=/", client),
-                            string.format("AccessExpires=%d; path=/", expires)
-                          }
+                            ngx.header["Set-Cookie"] = {
+                                string.format("AccessToken=%s; path=/", crypto.hmac.digest("sha256", string.format("%s%d", client, expires), HMAC_SECRET)),
+                                string.format("ClientId=%s; path=/", client),
+                                string.format("AccessExpires=%d; path=/", expires)
+                            }
 
-                          ngx.exit(ngx.HTTP_NO_CONTENT)
+                            ngx.exit(ngx.HTTP_NO_CONTENT)
                         end
                     }
                 }
@@ -200,17 +200,17 @@ http {
                             local crypto = require "crypto"
 
                             if ngx.var.ssl_client_verify == "NONE" then
-                              client = ngx.var.cookie_ClientId
-                              client_hmac = ngx.var.cookie_AccessToken
-                              access_expires = ngx.var.cookie_AccessExpires
+                                client = ngx.var.cookie_ClientId
+                                client_hmac = ngx.var.cookie_AccessToken
+                                access_expires = ngx.var.cookie_AccessExpires
 
-                              if client ~= nil and client_hmac ~= nil and access_expires ~= nil then
-                                hmac = crypto.hmac.digest("sha256", string.format("%s%d", client, access_expires), HMAC_SECRET)
+                                if client ~= nil and client_hmac ~= nil and access_expires ~= nil then
+                                    hmac = crypto.hmac.digest("sha256", string.format("%s%d", client, access_expires), HMAC_SECRET)
 
-                                if hmac ~= "" and hmac == client_hmac and tonumber(access_expires) > ngx.time() then
-                                  return
+                                    if hmac ~= "" and hmac == client_hmac and tonumber(access_expires) > ngx.time() then
+                                        return
+                                    end
                                 end
-                              end
                             end
 
                             ngx.exit(ngx.HTTP_FORBIDDEN)
