@@ -130,13 +130,6 @@ http {
                     ssl_crl             /ssl/client.crl;
                 {{/SSL_CLIENT_AUTH_CRL}}
                 ssl_verify_client       optional;
-
-                # Workaround for workaround
-                # Setting cookies with Lua messes up the MIME type, causing html page to download instead of being openend in browser
-                # see: https://github.com/openresty/openresty/issues/52
-                location = / {
-                    rewrite ^ /index.htm last;
-                }
             {{/SSL_CLIENT_AUTH}}
         {{/ENABLE_HTTPS}}
 
