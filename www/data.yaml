@@ -1,188 +1,188 @@
 ---
 pages:
-- pageid: mainpage
-  pageicon: icon.png
-  pagetitle: Smarthome
-  sections:
-  - sectiontitle: Lighting
-    items:
-    - title: On/Off  
-      type: switch
-      topic: hue//1
-      icon: icons/socket_f.png
-    - title: Hue bulb
-      type: slider
-      topic: hue//2
-      transform:
-        set: return JSON.stringify({hue:15.9/360,sat:1,val:Number(input)})
-      icon: icons/bulb.png
-  - sectiontitle: Security
-    items:
-    - title: Contact Switches
-      topic: var//contacts/count
-      type: text
-      link: "#contactswitches"
-  - sectiontitle: Heating
-    items:
-    - title: Current Temperature
-      type: text
-      topic: hm//XYZ0000001/1/TEMPERATURE
-      transform: return Number(value).toFixed(1) + '°C'
-    - title: Set Temperature
-      type: select
-      topic: hm//XYZ0000001/2/SET_TEMPERATURE
-      selectOptions:
-      - label: 'Off'
-        value: '4.5'
-      - label: 5.0 °C
-        value: '5'
-      - label: 6.0 °C
-        value: '6'
-      - label: 7.0 °C
-        value: '7'
-      - label: 8.0 °C
-        value: '8'
-      - label: 9.0 °C
-        value: '9'
-      - label: 10.0 °C
-        value: '10'
-      - label: 11.0 °C
-        value: '11'
-      - label: 12.0 °C
-        value: '12'
-      - label: 13.0 °C
-        value: '13'
-      - label: 14.0 °C
-        value: '14'
-      - label: 15.0 °C
-        value: '15'
-      - label: 16.0 °C
-        value: '16'
-      - label: 17.0 °C
-        value: '17'
-      - label: 18.0 °C
-        value: '18'
-      - label: 18.5 °C
-        value: '18.5'
-      - label: 19.0 °C
-        value: '19'
-      - label: 19.5 °C
-        value: '19.5'
-      - label: 20.0 °C
-        value: '20'
-      - label: 20.5 °C
-        value: '20.5'
-      - label: 21.0 °C
-        value: '21'
-      - label: 21.5 °C
-        value: '21.5'
-      - label: 22.0 °C
-        value: '22'
-      - label: 22.5 °C
-        value: '22.5'
-      - label: 23.0 °C
-        value: '23'
-      - label: 23.5 °C
-        value: '23.5'
-      - label: 24.0 °C
-        value: '24'
-      - label: 24.5 °C
-        value: '24.5'
-      - label: 25.0 °C
-        value: '25'
-      - label: 26.0 °C
-        value: '26'
-      - label: 27.0 °C
-        value: '27'
-      - label: 28.0 °C
-        value: '28'
-      - label: 29.0 °C
-        value: '29'
-      - label: 30.0 °C
-        value: '30'
-      - label: Full
-        value: '30.5'
-    - title: Mode Dropdown
-      topic: 
-        get: hm/status/XYZ0000001/2/CONTROL_MODE
-        set: var/set/control_mode_set
-      type: select
-      selectOptions:
-      - label: Auto
-        value: '0'
-      - label: Manual
-        value: '1'
-    - title: Mode Buttons
-      topic: 
-        get: hm/status/XYZ0000001/2/CONTROL_MODE
-        set: var/set/control_mode_set
-      type: button
-      buttons:
-      - label: Auto
-        value: '0'
-      - label: Manual
-        value: '1'
-    - title: Valve State
-      type: text
-      topic: hm//XYZ0000002/4/VALVE_STATE
-      transform: return Number(value).toFixed(0) + ' %'
-  - sectiontitle: Debug
-    items:
-    - title: Uptime
-      type: text
-      topic: var/status/uptime/ms
-      transform: return pretty_ms(value)
-    - title: Last seen
-      type: text
-      topic: var/status/last_seen/ms
-      transform: return timeago(value)
-    - title: Testpage
-      type: text
-      link: "#testpage"
-    - type: html
-      html: >
-        <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
-        <div class="list-group-item">
-          <span style="font-family: Great Vibes;">Hello World!</span>
-        </div>
-- pageid: contactswitches
-  pagetitle: Contact Switches
-  sections:
-  - sectiontitle: Doors
-    items:
-    - title: Frontdoor
-      type: text
-      topic: hm//XYZ0000007/1/STATE
-      transform: 'return (value) ? ''Open'' : ''Closed'''
-  - sectiontitle: Windows
-    items:
-    - title: Simon's Room
-      type: text
-      topic: hm//XYZ0000003/1/STATE
-      transform: 'return (value) ? ''Open'' : ''Closed'''
-    - title: Johanna's Room
-      type: text
-      topic: hm//XYZ0000004/1/STATE
-      transform: 'return (value) ? ''Open'' : ''Closed'''
-    - title: Livingroom
-      type: text
-      topic: hm//XYZ0000005/1/STATE
-      transform: 'return (value) ? ''Open'' : ''Closed'''
-    - title: Bathroom
-      type: text
-      topic: hm//XYZ0000006/1/STATE
-      transform: 'return (value) ? ''Open'' : ''Closed'''
-- pageid: testpage
-  pagetitle: Some Sub-Page
-  sections:
-  - sectiontitle: Test Room
-    items:
-    - title: Topics refresh on background pages
-      type: text
-      topic: var//contacts/count
-    - type: html
-      html: >
-        <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
-        <div class="list-group-item">
-          <span style="font-family: Great Vibes;">Hello World!</span>
-        </div>
+  - pageid: mainpage
+    pageicon: icon.png
+    pagetitle: Smarthome
+    sections:
+      - sectiontitle: Lighting
+        items:
+          - title: On/Off
+            type: switch
+            topic: hue//1
+            icon: icons/socket_f.png
+          - title: Hue bulb
+            type: slider
+            topic: hue//2
+            transform:
+              set: return JSON.stringify({hue:15.9/360,sat:1,val:Number(input)})
+            icon: icons/bulb.png
+      - sectiontitle: Security
+        items:
+          - title: Contact Switches
+            topic: var//contacts/count
+            type: text
+            link: "#contactswitches"
+      - sectiontitle: Heating
+        items:
+          - title: Current Temperature
+            type: text
+            topic: hm//XYZ0000001/1/TEMPERATURE
+            transform: return Number(value).toFixed(1) + '°C'
+          - title: Set Temperature
+            type: select
+            topic: hm//XYZ0000001/2/SET_TEMPERATURE
+            selectOptions:
+              - label: 'Off'
+                value: '4.5'
+              - label: 5.0 °C
+                value: '5'
+              - label: 6.0 °C
+                value: '6'
+              - label: 7.0 °C
+                value: '7'
+              - label: 8.0 °C
+                value: '8'
+              - label: 9.0 °C
+                value: '9'
+              - label: 10.0 °C
+                value: '10'
+              - label: 11.0 °C
+                value: '11'
+              - label: 12.0 °C
+                value: '12'
+              - label: 13.0 °C
+                value: '13'
+              - label: 14.0 °C
+                value: '14'
+              - label: 15.0 °C
+                value: '15'
+              - label: 16.0 °C
+                value: '16'
+              - label: 17.0 °C
+                value: '17'
+              - label: 18.0 °C
+                value: '18'
+              - label: 18.5 °C
+                value: '18.5'
+              - label: 19.0 °C
+                value: '19'
+              - label: 19.5 °C
+                value: '19.5'
+              - label: 20.0 °C
+                value: '20'
+              - label: 20.5 °C
+                value: '20.5'
+              - label: 21.0 °C
+                value: '21'
+              - label: 21.5 °C
+                value: '21.5'
+              - label: 22.0 °C
+                value: '22'
+              - label: 22.5 °C
+                value: '22.5'
+              - label: 23.0 °C
+                value: '23'
+              - label: 23.5 °C
+                value: '23.5'
+              - label: 24.0 °C
+                value: '24'
+              - label: 24.5 °C
+                value: '24.5'
+              - label: 25.0 °C
+                value: '25'
+              - label: 26.0 °C
+                value: '26'
+              - label: 27.0 °C
+                value: '27'
+              - label: 28.0 °C
+                value: '28'
+              - label: 29.0 °C
+                value: '29'
+              - label: 30.0 °C
+                value: '30'
+              - label: Full
+                value: '30.5'
+          - title: Mode Dropdown
+            topic:
+              get: hm/status/XYZ0000001/2/CONTROL_MODE
+              set: var/set/control_mode_set
+            type: select
+            selectOptions:
+              - label: Auto
+                value: '0'
+              - label: Manual
+                value: '1'
+          - title: Mode Buttons
+            topic:
+              get: hm/status/XYZ0000001/2/CONTROL_MODE
+              set: var/set/control_mode_set
+            type: button
+            buttons:
+              - label: Auto
+                value: '0'
+              - label: Manual
+                value: '1'
+          - title: Valve State
+            type: text
+            topic: hm//XYZ0000002/4/VALVE_STATE
+            transform: return Number(value).toFixed(0) + ' %'
+      - sectiontitle: Debug
+        items:
+          - title: Uptime
+            type: text
+            topic: var/status/uptime/ms
+            transform: return pretty_ms(value)
+          - title: Last seen
+            type: text
+            topic: var/status/last_seen/ms
+            transform: return timeago(value)
+          - title: Testpage
+            type: text
+            link: "#testpage"
+          - type: html
+            html: >
+              <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
+              <div class="list-group-item">
+                <span style="font-family: Great Vibes;">Hello World!</span>
+              </div>
+  - pageid: contactswitches
+    pagetitle: Contact Switches
+    sections:
+      - sectiontitle: Doors
+        items:
+          - title: Frontdoor
+            type: text
+            topic: hm//XYZ0000007/1/STATE
+            transform: 'return (value) ? ''Open'' : ''Closed'''
+      - sectiontitle: Windows
+        items:
+          - title: Simon's Room
+            type: text
+            topic: hm//XYZ0000003/1/STATE
+            transform: 'return (value) ? ''Open'' : ''Closed'''
+          - title: Johanna's Room
+            type: text
+            topic: hm//XYZ0000004/1/STATE
+            transform: 'return (value) ? ''Open'' : ''Closed'''
+          - title: Livingroom
+            type: text
+            topic: hm//XYZ0000005/1/STATE
+            transform: 'return (value) ? ''Open'' : ''Closed'''
+          - title: Bathroom
+            type: text
+            topic: hm//XYZ0000006/1/STATE
+            transform: 'return (value) ? ''Open'' : ''Closed'''
+  - pageid: testpage
+    pagetitle: Some Sub-Page
+    sections:
+      - sectiontitle: Test Room
+        items:
+          - title: Topics refresh on background pages
+            type: text
+            topic: var//contacts/count
+          - type: html
+            html: >
+              <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
+              <div class="list-group-item">
+                <span style="font-family: Great Vibes;">Hello World!</span>
+              </div>
