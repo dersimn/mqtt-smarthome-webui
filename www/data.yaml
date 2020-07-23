@@ -128,6 +128,14 @@ pages:
       transform: return Number(value).toFixed(0) + ' %'
   - sectiontitle: Debug
     items:
+    - title: Uptime
+      type: text
+      topic: var/status/uptime/ms
+      transform: return pretty_ms(value)
+    - title: Last seen
+      type: text
+      topic: var/status/last_seen/ms
+      transform: return timeago(value)
     - title: Testpage
       type: text
       link: "#testpage"

@@ -9,6 +9,8 @@ const yaml = require('js-yaml');
 const shortid = require('shortid');
 const MqttSmarthome = require('mqtt-smarthome-connect');
 const localforage = require('localforage');
+const {format: timeago} = require('timeago.js');
+const pretty_ms = require('pretty-ms');
 
 const ssl = location.protocol == 'https:';
 
