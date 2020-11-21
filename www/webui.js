@@ -188,7 +188,12 @@ $(window).scroll(function() {
 
             switch (meta.type) {
                 case 'text':
-                    if (!(typeof usedValue === 'string' || usedValue instanceof String)) return;
+                    if (!(
+                            typeof usedValue !== 'object' || 
+                            usedValue instanceof String || 
+                            usedValue instanceof Number || 
+                            usedValue instanceof Boolean)
+                        ) return;
                     element.text(usedValue);
                     break;
                 case 'switch':
@@ -196,7 +201,12 @@ $(window).scroll(function() {
                     $('#'+meta.switchId).prop('checked', usedValue);
                     break;
                 case 'button':
-                    if (!(typeof usedValue === 'string' || usedValue instanceof String)) return;
+                    if (!(
+                            typeof usedValue !== 'object' || 
+                            usedValue instanceof String || 
+                            usedValue instanceof Number || 
+                            usedValue instanceof Boolean)
+                        ) return;
                     if (element.data('mqtt-value') == (usedValue)) {
                         element.addClass('active');
                     } else {
@@ -210,7 +220,12 @@ $(window).scroll(function() {
                     $('#'+meta.sliderId).get(0).style.setProperty("--c",0);
                     break;
                 case 'select':
-                    if (!(typeof usedValue === 'string' || usedValue instanceof String)) return;
+                    if (!(
+                            typeof usedValue !== 'object' || 
+                            usedValue instanceof String || 
+                            usedValue instanceof Number || 
+                            usedValue instanceof Boolean)
+                        ) return;
                     $('#'+meta.selectId).val(usedValue);
                     $('#'+meta.selectId).data('last-mqtt-value', usedValue);
                     $('#'+meta.selectId+'_loader').removeClass('loader');
