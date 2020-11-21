@@ -69,7 +69,7 @@ $(window).scroll(function() {
     // Get content file
     const yamlfile = await $.get({url: 'data.yaml', cache: false});
     let data = yaml.load(yamlfile);
-    let topics = ['time'];
+    const topics = new Set('time');
 
     // Preflight data
     for (let [i, page] of Object.entries(data.pages)) {
@@ -102,7 +102,7 @@ $(window).scroll(function() {
                 }
                 data.pages[i].sections[j].items[k].meta = JSON.stringify(item);
 
-                if ('topic' in item) { topics.push(item.topic.get); }
+                if ('topic' in item) { topics.add(item.topic.get); }
             }
         }
     }
@@ -157,7 +157,7 @@ $(window).scroll(function() {
     });
     mqtt.connect();
 
-    mqtt.subscribe(topics, (topic, message) => {
+    mqtt.subscribe([...topics], (topic, message) => {
         const val = (typeof message === 'object' && 'val' in message) ? message.val : message;
 
         $('[data-mqtt-topic="'+topic+'"]').each(function(i, elem) {
