@@ -163,13 +163,24 @@ $(window).scroll(function() {
         $('[data-mqtt-topic="'+topic+'"]').each(function(i, elem) {
             const element = $(elem);
             const meta = element.data('meta');
+
+            let valTransformed;
             if ('transform' in meta) {
                 if (typeof meta.transform == 'string') {
-                    var valTransformed = Function('topic', 'message', 'value', meta.transform)(topic, message, val);
+                    try {
+                        valTransformed = Function('topic', 'message', 'value', meta.transform)(topic, message, val);
+                    } catch {
+                        return;
+                    }
+                    
                 }
                 if (typeof meta.transform == 'object') {
                     if ('get' in meta.transform) {
-                        var valTransformed = Function('topic', 'message', 'value', meta.transform.get)(topic, message, val);
+                        try {
+                            valTransformed = Function('topic', 'message', 'value', meta.transform.get)(topic, message, val);
+                        } catch {
+                            return;
+                        }
                     }
                 }
             }
