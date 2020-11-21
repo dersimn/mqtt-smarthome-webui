@@ -220,7 +220,7 @@ $(window).scroll(function() {
                 }
             }
 
-            let message = String((inputTransformed !== undefined) ? inputTransformed : input);
+            let message = (inputTransformed !== undefined) ? inputTransformed : input;
 
             mqtt.publish(topic, message);
             return false;
@@ -243,7 +243,7 @@ $(window).scroll(function() {
                 }
             }
 
-            let message = String((inputTransformed !== undefined) ? inputTransformed : input);
+            let message = (inputTransformed !== undefined) ? inputTransformed : input;
 
             mqtt.publish(topic, message);
         });
@@ -271,7 +271,7 @@ $(window).scroll(function() {
             }
         }
 
-        let message = String((inputTransformed !== undefined) ? inputTransformed : input);
+        let message = (inputTransformed !== undefined) ? inputTransformed : input;
 
         mqtt.publish(topic, message);
     });
@@ -290,7 +290,7 @@ $(window).scroll(function() {
             }
         }
 
-        let message = String((inputTransformed !== undefined) ? inputTransformed : input);
+        let message = (inputTransformed !== undefined) ? inputTransformed : input;
 
         mqtt.publish(topic, message);
 
