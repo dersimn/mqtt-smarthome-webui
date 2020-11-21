@@ -184,6 +184,7 @@ $(window).scroll(function() {
                     }
                 }
             }
+            if (valTransformed === null) return;
             const usedValue = (valTransformed !== undefined) ? valTransformed : val;
 
             switch (meta.type) {
