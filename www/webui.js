@@ -177,12 +177,15 @@ $(window).scroll(function() {
 
             switch (meta.type) {
                 case 'text':
+                    if (!(typeof usedValue === 'string' || usedValue instanceof String)) return;
                     element.text(usedValue);
                     break;
                 case 'switch':
+                    if (!(typeof usedValue === 'boolean' || usedValue instanceof Boolean)) return;
                     $('#'+meta.switchId).prop('checked', usedValue);
                     break;
                 case 'button':
+                    if (!(typeof usedValue === 'string' || usedValue instanceof String)) return;
                     if (element.data('mqtt-value') == (usedValue)) {
                         element.addClass('active');
                     } else {
@@ -190,11 +193,13 @@ $(window).scroll(function() {
                     }
                     break;
                 case 'slider':
+                    if (isNaN(usedValue)) return;
                     $('#'+meta.sliderId).val(usedValue);
                     $('#'+meta.sliderId).data('last-mqtt-value', usedValue);
                     $('#'+meta.sliderId).get(0).style.setProperty("--c",0);
                     break;
                 case 'select':
+                    if (!(typeof usedValue === 'string' || usedValue instanceof String)) return;
                     $('#'+meta.selectId).val(usedValue);
                     $('#'+meta.selectId).data('last-mqtt-value', usedValue);
                     $('#'+meta.selectId+'_loader').removeClass('loader');
