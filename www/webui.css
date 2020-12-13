@@ -196,3 +196,14 @@ a:hover {
     height: 31px;
     width: 31px;
 }
+
+.sh-input-number {
+    width: 4em!important;
+    background-color: lightgray;
+    text-align: center;
+}
+.sh-input-number:focus {
+    border-color: inherit;
+    box-shadow: inherit;
+    background-color: inherit;
+}

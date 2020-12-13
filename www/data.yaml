@@ -102,6 +102,9 @@ pages:
                 value: '30'
               - label: Full
                 value: '30.5'
+          - title: Set Temperature
+            type: number
+            topic: hm//XYZ0000001/2/SET_TEMPERATURE
           - title: Mode Dropdown
             topic:
               get: hm/status/XYZ0000001/2/CONTROL_MODE
