@@ -48,14 +48,18 @@ If you provide the file `/nginx.log`, nginx will enable a more detailed access l
 
 ## Development
 
-    git clone https://github.com/dersimn/mqtt-smarthome-webui
-    cd mqtt-smarthome-webui
-    docker build .
+    npm i
+    npx grunt
 
-For development, start a Docker Container with the following command, changes to files in `/www` are applied without rebuilding the container:
+You probably also need a MQTT Broker:
 
-    docker run -v $(pwd)/www:/www:ro                       -p 80:80            -e "MQTT_HOST=10.1.1.101:9001" <id>
-    docker run -v $(pwd)/www:/www:ro -v $(pwd)/ssl:/ssl:ro -p 80:80 -p 443:443 -e "MQTT_HOST=10.1.1.101:9001" <id>
+    docker run -d --restart=always --name=mqtt -p 1883:1883 -p 9001:9001 -v "$(pwd)/contrib/mosquitto.conf":/mosquitto/config/mosquitto.conf:ro eclipse-mosquitto
+
+With this project you *can* have the cake and eat it, both: Start a Docker container with the following command to simulate the later productive environment. To change files immediately without rebuilding the Docker Image everytime a change is made, the `/www` folder can simply be mounted into the Container:
+    
+    docker build -t webui .
+    docker run --rm -v "$(pwd)/www":/www:ro                       -p 80:80            -e MQTT_HOST=host.docker.internal:9001 webui
+    docker run --rm -v "$(pwd)/www":/www:ro -v $(pwd)/ssl:/ssl:ro -p 80:80 -p 443:443 -e MQTT_HOST=host.docker.internal:9001 webui
 
 For a simple simulation environment consider also running
 
