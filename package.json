@@ -21,7 +21,8 @@
     "popper.js": "^1.16.1",
     "pretty-ms": "^7.0.0",
     "shortid": "^2.2.15",
-    "timeago.js": "^4.0.2"
+    "timeago.js": "^4.0.2",
+    "ua-parser-js": "^0.7.23"
   },
   "devDependencies": {
     "grunt": "^1.2.1",

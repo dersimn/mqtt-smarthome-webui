@@ -11,6 +11,7 @@ const MqttSmarthome = require('mqtt-smarthome-connect');
 const localforage = require('localforage');
 const {format: timeago} = require('timeago.js');
 const pretty_ms = require('pretty-ms');
+const UAParser = require('ua-parser-js');
 
 const ssl = location.protocol === 'https:';
 
@@ -133,14 +134,10 @@ $(window).scroll(function () {
 
         // Publish device info if available
         try {
-            mqtt.publish('webui/maintenance/' + instanceId + '/deviceInfo', {
-                val: FRUBIL.status.value !== 0,
-                client: FRUBIL.client,
-                device: FRUBIL.device,
-                ts: Date.now()
-            }, {retain: true});
+            const parser = new UAParser();
+            mqtt.publish('webui/maintenance/' + instanceId + '/deviceInfo', parser.getResult(), {retain: true});
         } catch {
-            mqtt.publish('webui/maintenance/' + instanceId + '/deviceInfo', {val: false});
+            mqtt.publish('webui/maintenance/' + instanceId + '/deviceInfo', null, {retain: true});
         }
 
         // Handle online/offline Button
