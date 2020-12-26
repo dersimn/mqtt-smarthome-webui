@@ -259,6 +259,7 @@ $(window).scroll(function () {
                     }
 
                     element.find('input').val(usedValue);
+                    element.find('input').removeClass('working');
                     break;
                 default:
                     // Do nothing
@@ -344,21 +345,27 @@ $(window).scroll(function () {
         $(input).change(() => {
             const inputValue = getInputValue();
             const transformedValue = transformMessage(inputValue, meta);
+
             mqtt.publish(topic, transformedValue);
+            $(input).addClass('working');
         });
 
         $(btnLeft).click(() => {
             const increment = meta.options?.['left-increment'] ?? -1;
             const inputValue = getInputValue();
             const transformedValue = transformMessage(inputValue + increment, meta);
+
             mqtt.publish(topic, transformedValue);
+            $(input).addClass('working');
         });
 
         $(btnRight).click(() => {
             const increment = meta.options?.['right-increment'] ?? 1;
             const inputValue = getInputValue();
             const transformedValue = transformMessage(inputValue + increment, meta);
+
             mqtt.publish(topic, transformedValue);
+            $(input).addClass('working');
         });
     });
 })();

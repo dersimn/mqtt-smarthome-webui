@@ -201,9 +201,30 @@ a:hover {
     width: 4em!important;
     background-color: lightgray;
     text-align: center;
+    border: none;
 }
 .sh-input-number:focus {
     border-color: inherit;
     box-shadow: inherit;
     background-color: inherit;
+}
+
+/* Animation during processing */
+.working {
+  background-color: lightgray;
+  animation-name: color;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes color {
+  0% {
+    background-color: lightgray;
+  }
+  50% {
+    background-color: darkgray;
+  }
+  100% {
+    background-color: lightgray;
+  }
 }
