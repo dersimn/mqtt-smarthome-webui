@@ -63,9 +63,7 @@ With this project you *can* have the cake and eat it, both: Start a Docker conta
 
 For a simple simulation environment consider also running
 
-    git clone https://github.com/dersimn/mqtt-smarthome-demo.git
-    cd mqtt-smarthome-demo
-    docker-compose up -d mqtt admin logic
+    docker run -d --restart=always --name=logic -e "TZ=Europe/Berlin" -v "$(pwd)/contrib/scripts":/scripts:ro dersimn/mqtt-scripts:1 --url mqtt://host.docker.internal --dir /scripts
 
 in background.
 
