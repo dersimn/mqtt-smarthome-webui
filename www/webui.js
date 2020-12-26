@@ -253,6 +253,13 @@ $(window).scroll(function () {
                     $('#' + meta.selectId).data('last-mqtt-value', usedValue);
                     $('#' + meta.selectId + '_loader').removeClass('loader');
                     break;
+                case 'number':
+                    if (Number.isNaN(usedValue)) {
+                        return;
+                    }
+
+                    element.find('input').val(usedValue);
+                    break;
                 default:
                     // Do nothing
             }
@@ -317,6 +324,42 @@ $(window).scroll(function () {
 
         $(this).val($(this).data('last-mqtt-value')); // Reset to last known state
         $('#' + $(this).attr('id') + '_loader').addClass('loader'); // Show loader
+    });
+
+    $('[id^=number]').each(function () {
+        const meta = $(this).data('meta');
+        const topic = meta.topic.set;
+        if (topic === null) {
+            return;
+        }
+
+        const input = $(this).find('input');
+        const btnLeft = $(this).find('button.sh-number-left');
+        const btnRight = $(this).find('button.sh-number-right');
+
+        function getInputValue() {
+            return Number($(input).val().replace(',', '.'));
+        }
+
+        $(input).change(() => {
+            const inputValue = getInputValue();
+            const transformedValue = transformMessage(inputValue, meta);
+            mqtt.publish(topic, transformedValue);
+        });
+
+        $(btnLeft).click(() => {
+            const increment = meta.options?.['left-increment'] ?? -1;
+            const inputValue = getInputValue();
+            const transformedValue = transformMessage(inputValue + increment, meta);
+            mqtt.publish(topic, transformedValue);
+        });
+
+        $(btnRight).click(() => {
+            const increment = meta.options?.['right-increment'] ?? 1;
+            const inputValue = getInputValue();
+            const transformedValue = transformMessage(inputValue + increment, meta);
+            mqtt.publish(topic, transformedValue);
+        });
     });
 })();
 
