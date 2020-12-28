@@ -94,7 +94,9 @@
                     {{/itemtype_html}}
 
                     {{#itemtype_html}}
-                      {{{html}}}
+                      <div id="{{htmlId}}" data-mqtt-topic="{{topic.get}}" data-meta="{{meta}}">
+                        {{{html}}}
+                      </div>
                     {{/itemtype_html}}
                   </div>
                 {{/items}}
