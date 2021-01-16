@@ -160,7 +160,7 @@ $(window).scroll(function () {
     mqtt.connect();
 
     mqtt.subscribe([...topics], (topic, message) => {
-        const value = (typeof message === 'object' && 'val' in message) ? message.val : message;
+        const value = (typeof message === 'object' && message !== null && 'val' in message) ? message.val : message;
 
         $('[data-mqtt-topic="' + topic + '"]').each((i, element_) => {
             const element = $(element_);
