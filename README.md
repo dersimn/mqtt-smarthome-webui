@@ -71,7 +71,13 @@ in background.
 
     docker buildx create --name mybuilder
     docker buildx use mybuilder
-    docker buildx build --platform linux/amd64,linux/arm/v7 -t dersimn/mqtt-smarthome-webui -t dersimn/mqtt-smarthome-webui:1.x.0 --push .
+    docker buildx build \
+        --platform linux/386,linux/amd64,linux/arm64/v8,linux/arm/v7 \
+        -t dersimn/mqtt-smarthome-webui \
+        -t dersimn/mqtt-smarthome-webui:1 \
+        -t dersimn/mqtt-smarthome-webui:1.x \
+        -t dersimn/mqtt-smarthome-webui:1.x.0 \
+        --push .
 
 ## Credits
 
