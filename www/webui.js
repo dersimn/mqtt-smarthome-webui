@@ -131,13 +131,24 @@ $(window).scroll(function () {
     });
     mqtt.on('connect', () => {
         mqtt.publish('webui/maintenance/' + instanceId + '/online', true, {retain: true});
+        if (pkgInfo) {
+            mqtt.publish('webui/maintenance/' + instanceId + '/info/project', {
+                name: pkgInfo.name,
+                version: pkgInfo.version,
+                build: {
+                    'git-hash': pkgInfo.git.hash,
+                    'git-tag': pkgInfo.git.tag || pkgInfo.git.branch,
+                    'build-timestamp': pkgInfo.buildTime
+                }
+            }, {retain: true});
+        }
 
         // Publish device info if available
         try {
             const parser = new UAParser();
-            mqtt.publish('webui/maintenance/' + instanceId + '/deviceInfo', parser.getResult(), {retain: true});
+            mqtt.publish('webui/maintenance/' + instanceId + '/info/device', parser.getResult(), {retain: true});
         } catch {
-            mqtt.publish('webui/maintenance/' + instanceId + '/deviceInfo', null, {retain: true});
+            mqtt.publish('webui/maintenance/' + instanceId + '/info/device', null, {retain: true});
         }
 
         // Handle online/offline Button
