@@ -2,6 +2,7 @@ FROM node as jsbuilder
 
 RUN npm install -g grunt
 
+COPY .git /app/.git
 COPY package.json /app/package.json
 COPY Gruntfile.js /app/Gruntfile.js
 
