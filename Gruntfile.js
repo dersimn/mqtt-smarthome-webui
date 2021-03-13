@@ -24,6 +24,34 @@ module.exports = function(grunt) {
             }
         },
 
+        gitinfo: {
+            commands: {
+                'local.branch.current.tag' : ['tag', '--points-at', 'HEAD']
+            }
+        },
+
+        file_append: {
+            something: {
+                files: [
+                    {
+                        append: `
+                            const pkgInfo = {
+                                name: '<%= pkg.name %>',
+                                version: '<%= pkg.version %>',
+                                buildTime: <%= Date.now() %>,
+                                git: {
+                                    branch: '<%= gitinfo.local.branch.current.name %>',
+                                    tag: '<%= gitinfo.local.branch.current.tag %>',
+                                    hash: '<%= gitinfo.local.branch.current.SHA %>'
+                                }
+                            };
+                        `,
+                        input: 'www/bundle.js'
+                    }
+                ]
+            }
+        },
+
         clean: {
             dist: [
                 'node_modules/',
@@ -35,6 +63,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-gitinfo');
+    grunt.loadNpmTasks('grunt-file-append');
 
-    grunt.registerTask('default', ['browserify', 'concat']);
+    grunt.registerTask('default', ['gitinfo', 'browserify', 'concat', 'file_append']);
 };

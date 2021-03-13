@@ -29,6 +29,8 @@
     "grunt-browserify": "^6.0.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-concat": "^1.0.1",
+    "grunt-file-append": "^0.0.7",
+    "grunt-gitinfo": "^0.1.9",
     "xo": "^0.38.2"
   },
   "xo": {
@@ -41,6 +43,9 @@
       "no-new-func": [
         "off"
       ]
-    }
+    },
+    "globals": [
+      "pkgInfo"
+    ]
   }
 }
