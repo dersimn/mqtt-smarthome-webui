@@ -4,12 +4,12 @@
 
 Provide a file `data.yaml` with the page structure you want to offer, see [example](https://github.com/dersimn/mqtt-smarthome-webui/blob/master/www/data.yaml) for reference.
 
-This image can proxy-pass the Websocket connection from your MQTT broker, by setting the env variable `MQTT_HOST`.  
+This image can proxy-pass the Websocket connection from your MQTT broker, by setting the env variable `WS_PROXY`.  
 You have to enable Websockets on your broker. The Docker Image [toke/mosquitto](https://hub.docker.com/r/toke/mosquitto) for e.g. has it already enabled by default on [port 9001](https://github.com/toke/docker-mosquitto/blob/8aa0a74b444fb2377fcd4a43ac85a257aef51176/config/conf.d/websockets.conf#L1), where the official Docker Image [eclipse-mosquitto](https://hub.docker.com/_/eclipse-mosquitto) need to be configured first.
 
     docker run -d --restart=always \
         -v $(pwd)/yourconfig.yaml:/www/data.yaml:ro \
-        -e "MQTT_HOST=10.1.1.50:9001" \
+        -e "WS_PROXY=10.1.1.50:9001" \
         -p 80:80 \
         dersimn/mqtt-smarthome-webui
 
@@ -31,7 +31,7 @@ A nice tutorial on how to generate your own certificates, is located [here](http
     docker run -d --restart=always \
         -v $(pwd)/yourconfig.json:/www/data.json:ro \
         -v $(pwd)/ssl:/ssl:ro \
-        -e "MQTT_HOST=10.1.1.50:9001" \
+        -e "WS_PROXY=10.1.1.50:9001" \
         -p 80:80 \
         -p 443:443 \
         dersimn/mqtt-smarthome-webui
@@ -58,8 +58,8 @@ You probably also need a MQTT Broker:
 With this project you *can* have the cake and eat it, both: Start a Docker container with the following command to simulate the later productive environment. To change files immediately without rebuilding the Docker Image everytime a change is made, the `/www` folder can simply be mounted into the Container:
     
     docker build -t webui .
-    docker run --rm -v "$(pwd)/www":/www:ro                       -p 80:80            -e MQTT_HOST=host.docker.internal:9001 webui
-    docker run --rm -v "$(pwd)/www":/www:ro -v $(pwd)/ssl:/ssl:ro -p 80:80 -p 443:443 -e MQTT_HOST=host.docker.internal:9001 webui
+    docker run --rm -v "$(pwd)/www":/www:ro                       -p 80:80            -e WS_PROXY=host.docker.internal:9001 webui
+    docker run --rm -v "$(pwd)/www":/www:ro -v $(pwd)/ssl:/ssl:ro -p 80:80 -p 443:443 -e WS_PROXY=host.docker.internal:9001 webui
 
 For a simple simulation environment consider also running
 
