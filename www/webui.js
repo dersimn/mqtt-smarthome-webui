@@ -277,7 +277,7 @@ $(window).scroll(function () {
                 return false;
             }
 
-            mqtt.publish(topic, transformMessage($(this).prop('checked'), meta));
+            mqtt.publish(topic, transformMessage($(this).prop('checked'), meta), meta.options?.mqtt);
             return false;
         });
     });
@@ -291,7 +291,7 @@ $(window).scroll(function () {
                 return;
             }
 
-            mqtt.publish(topic, transformMessage(element.data('mqtt-value'), meta));
+            mqtt.publish(topic, transformMessage(element.data('mqtt-value'), meta), meta.options?.mqtt);
         });
     });
 
@@ -311,7 +311,7 @@ $(window).scroll(function () {
             return;
         }
 
-        mqtt.publish(topic, transformMessage(element.val(), meta));
+        mqtt.publish(topic, transformMessage(element.val(), meta), meta.options?.mqtt);
     });
 
     $('[id^=select]').on('change', function () {
@@ -321,7 +321,7 @@ $(window).scroll(function () {
             return;
         }
 
-        mqtt.publish(topic, transformMessage($(this).val(), meta));
+        mqtt.publish(topic, transformMessage($(this).val(), meta), meta.options?.mqtt);
 
         $(this).val($(this).data('last-mqtt-value')); // Reset to last known state
         $('#' + $(this).attr('id') + '_loader').addClass('loader'); // Show loader
@@ -346,7 +346,7 @@ $(window).scroll(function () {
             const inputValue = getInputValue();
             const transformedValue = transformMessage(inputValue, meta);
 
-            mqtt.publish(topic, transformedValue);
+            mqtt.publish(topic, transformedValue, meta.options?.mqtt);
             $(input).addClass('working');
         });
 
@@ -355,7 +355,7 @@ $(window).scroll(function () {
             const inputValue = getInputValue();
             const transformedValue = transformMessage(inputValue + increment, meta);
 
-            mqtt.publish(topic, transformedValue);
+            mqtt.publish(topic, transformedValue, meta.options?.mqtt);
             $(input).addClass('working');
         });
 
@@ -364,7 +364,7 @@ $(window).scroll(function () {
             const inputValue = getInputValue();
             const transformedValue = transformMessage(inputValue + increment, meta);
 
-            mqtt.publish(topic, transformedValue);
+            mqtt.publish(topic, transformedValue, meta.options?.mqtt);
             $(input).addClass('working');
         });
     });

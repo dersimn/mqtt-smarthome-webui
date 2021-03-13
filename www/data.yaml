@@ -142,6 +142,16 @@ pages:
           - title: Testpage
             type: text
             link: "#testpage"
+          - title: MQTT Options Retain
+            topic:
+              set: test/publish_retained
+            type: button
+            buttons:
+              - label: Publish
+                value: 'foo bar'
+            options:
+              mqtt:
+                retain: true
           - type: html
             html: >
               <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
