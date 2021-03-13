@@ -1,6 +1,7 @@
 name: 'Build and publish docker images (all platforms)'
 
 on:
+  workflow_dispatch:
   push:
     branches:
       # - master
