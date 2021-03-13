@@ -1,6 +1,6 @@
 {
   "name": "mqtt-smarthome-webui",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "authors": [
     "Simon Christmann <simon@christmann.email> (https://github.com/dersimn)"
