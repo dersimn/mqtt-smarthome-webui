@@ -125,14 +125,14 @@ $(window).scroll(function () {
     const mqttUrl = 'ws' + ((ssl) ? 's' : '') + '://' + location.hostname + ((location.port === '') ? '' : ':' + location.port) + '/mqtt';
     console.log('MQTT conenct to', mqttUrl);
     const mqtt = new MqttSmarthome(mqttUrl, {
-        will: {topic: 'webui/maintenance/' + instanceId + '/online', payload: 'false', retain: true},
+        will: {topic: 'dersimn/mqtt-smarthome-webui/' + instanceId + '/online', payload: 'false', retain: true},
         clientId: 'webui_' + instanceId,
         logger: console
     });
     mqtt.on('connect', () => {
-        mqtt.publish('webui/maintenance/' + instanceId + '/online', true, {retain: true});
+        mqtt.publish('dersimn/mqtt-smarthome-webui/' + instanceId + '/online', true, {retain: true});
         if (pkgInfo) {
-            mqtt.publish('webui/maintenance/' + instanceId + '/info/project', {
+            mqtt.publish('dersimn/mqtt-smarthome-webui/' + instanceId + '/info/project', {
                 name: pkgInfo.name,
                 version: pkgInfo.version,
                 build: {
@@ -146,9 +146,9 @@ $(window).scroll(function () {
         // Publish device info if available
         try {
             const parser = new UAParser();
-            mqtt.publish('webui/maintenance/' + instanceId + '/info/device', parser.getResult(), {retain: true});
+            mqtt.publish('dersimn/mqtt-smarthome-webui/' + instanceId + '/info/device', parser.getResult(), {retain: true});
         } catch {
-            mqtt.publish('webui/maintenance/' + instanceId + '/info/device', null, {retain: true});
+            mqtt.publish('dersimn/mqtt-smarthome-webui/' + instanceId + '/info/device', null, {retain: true});
         }
 
         // Handle online/offline Button
