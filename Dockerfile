@@ -19,8 +19,5 @@ COPY www /www
 COPY --from=jsbuilder /app/www/bundle.js /www/bundle.js
 COPY --from=jsbuilder /app/www/bundle.css /www/bundle.css
 
-EXPOSE 80
-EXPOSE 443
-
 ENV WS_PROXY_PATH /mqtt
 ENV DEDICATED_COOKIE_LOCATION /cookie
