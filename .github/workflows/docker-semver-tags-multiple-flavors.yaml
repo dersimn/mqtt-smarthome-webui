@@ -115,11 +115,19 @@ jobs:
           #   base-image: alpine:3  # Base image, usually first line of Dockerfile e.g.: `FROM alpine:3`
           #   dockerfile: ./Dockerfile-alpine  # Dockerfile to use with this flavor
           #   build-platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          - flavor: ios-workaround
+          - flavor: alpine
+            base-image: dersimn/nginx-websocket-proxy-client-certificate:1-alpine
+            dockerfile: ./Dockerfile
+            build-platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          - flavor: debian
             default-flavor: true
+            base-image: dersimn/nginx-websocket-proxy-client-certificate:1-debian
+            dockerfile: ./Dockerfile
+            build-platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
+          - flavor: ios-workaround
             base-image: dersimn/nginx-websocket-proxy-client-certificate-ios-workaround:3
             dockerfile: ./Dockerfile
-            build-platforms: linux/amd64,linux/arm/v7
+            build-platforms: linux/386,linux/amd64,linux/arm/v7
     steps:
       - name: Check if update for base image is available
         id: check
@@ -159,11 +167,11 @@ jobs:
             # 1.1.2-build.20220815T2015
             type=semver,pattern={{version}},suffix=-build.{{date 'YYYYMMDDTHHmm'}},enable=${{ matrix.default-flavor || 'false' }}
             # 1.1.2-build.20220815T2015-myflavor
-            #type=semver,pattern={{version}},suffix=-build.{{date 'YYYYMMDDTHHmm'}}-${{ matrix.flavor }}
+            type=semver,pattern={{version}},suffix=-build.{{date 'YYYYMMDDTHHmm'}}-${{ matrix.flavor }}
             # 1.1.2
             type=semver,pattern={{version}},enable=${{ matrix.default-flavor || 'false' }}
             # 1.1.2-myflavor
-            #type=semver,pattern={{version}},suffix=-${{ matrix.flavor }}
+            type=semver,pattern={{version}},suffix=-${{ matrix.flavor }}
             # 1.1
             type=semver,pattern={{major}}.{{minor}},enable=${{ (needs.tags.outputs.minor == 'true') && matrix.default-flavor || 'false' }}
             # 1.1-myflavor
@@ -171,16 +179,16 @@ jobs:
             # 1 (disabled if major is zero)
             type=semver,pattern={{major}},enable=${{ (needs.tags.outputs.major == 'true') && matrix.default-flavor || 'false' }}
             # 1-myflavor
-            #type=semver,pattern={{major}},suffix=-${{ matrix.flavor }},enable=${{ (needs.tags.outputs.major == 'true') || 'false' }}
+            type=semver,pattern={{major}},suffix=-${{ matrix.flavor }},enable=${{ (needs.tags.outputs.major == 'true') || 'false' }}
             # latest
             type=raw,value=latest,enable=${{ (needs.tags.outputs.latest == 'true') && matrix.default-flavor || 'false' }}
             # myflavor
-            #type=raw,value=${{ matrix.flavor }},enable=${{ (needs.tags.outputs.latest == 'true') || 'false' }}
+            type=raw,value=${{ matrix.flavor }},enable=${{ (needs.tags.outputs.latest == 'true') || 'false' }}
 
             # Branch name WITHOUT suffix for default flavor
             type=ref,event=branch,prefix=dev-,enable=${{ matrix.default-flavor || 'false' }}
             # Branch name WITH suffix for every branch & flavor
-            #type=ref,event=branch,prefix=dev-,suffix=-${{ matrix.flavor }}
+            type=ref,event=branch,prefix=dev-,suffix=-${{ matrix.flavor }}
             
             # Commit short SHA WITHOUT suffix for default flavor
             #type=sha,enable=${{ matrix.default-flavor || 'false' }}
@@ -212,6 +220,8 @@ jobs:
           platforms: ${{ matrix.build-platforms }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            BASE_IMAGE=${{ matrix.base-image }}
 
       - name: Summary
         run: |

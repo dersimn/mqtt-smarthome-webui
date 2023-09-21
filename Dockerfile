@@ -1,4 +1,8 @@
-FROM node as jsbuilder
+ARG BASE_IMAGE=dersimn/nginx-websocket-proxy-client-certificate:1-debian
+
+# ------------------------------------------------------------------------------
+
+FROM --platform=linux/amd64 node:18 as jsbuilder
 
 RUN npm install -g grunt
 
@@ -13,11 +17,11 @@ RUN npm install \
 
 # ------------------------------------------------------------------------------
 
-FROM dersimn/nginx-websocket-proxy-client-certificate-ios-workaround:3
+FROM ${BASE_IMAGE}
 
 COPY www /www
 COPY --from=jsbuilder /app/www/bundle.js /www/bundle.js
 COPY --from=jsbuilder /app/www/bundle.css /www/bundle.css
 
 ENV WS_PROXY_PATH /mqtt
-ENV DEDICATED_COOKIE_LOCATION /cookie
+ENV DEDICATED_COOKIE_LOCATION /cookie  # only valid for ios-workaround
