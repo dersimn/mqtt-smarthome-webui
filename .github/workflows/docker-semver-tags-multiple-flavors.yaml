@@ -167,7 +167,7 @@ jobs:
             # 1.1
             type=semver,pattern={{major}}.{{minor}},enable=${{ (needs.tags.outputs.minor == 'true') && matrix.default-flavor || 'false' }}
             # 1.1-myflavor
-            type=semver,pattern={{major}}.{{minor}},suffix=-${{ matrix.flavor }},enable=${{ (needs.tags.outputs.minor == 'true') || 'false' }}
+            #type=semver,pattern={{major}}.{{minor}},suffix=-${{ matrix.flavor }},enable=${{ (needs.tags.outputs.minor == 'true') || 'false' }}
             # 1 (disabled if major is zero)
             type=semver,pattern={{major}},enable=${{ (needs.tags.outputs.major == 'true') && matrix.default-flavor || 'false' }}
             # 1-myflavor
