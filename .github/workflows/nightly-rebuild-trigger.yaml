@@ -54,7 +54,8 @@ jobs:
             core.startGroup('Filter tags');
             const versions = tags.filter(t => semver.valid(t))
                                  .filter(v => !semver.prerelease(v))
-                                 .filter(v => semver.major(v) != 0);
+                                 .filter(v => semver.major(v) != 0)
+                                 .filter(v => semver.major(v) != 1);
             core.info(`Valid SemVer versions: ${JSON.stringify(versions)}`);
 
             const allMajors = new Set(versions.map(v => semver.major(v)));
